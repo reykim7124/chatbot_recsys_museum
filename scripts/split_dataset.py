@@ -32,7 +32,7 @@ def categorize_transportations(transportations):
 
   Return dataframes of categorized transportation
   """
-  airport, bus_station, train_station = [], [], []
+  airports, bus_stations, train_stations = [], [], []
   
   # loop through set_of_transportation and 
   # add value to corresponding variable
@@ -41,20 +41,20 @@ def categorize_transportations(transportations):
   for x in set_of_transportations:
     keyword = x.split()[0]
     if keyword == "Bandara":
-      airport.append(x)
+      airports.append(x)
     elif keyword == "Terminal":
-      bus_station.append(x)
+      bus_stations.append(x)
     elif keyword == "Stasiun":
-      train_station.append(x)
+      train_stations.append(x)
 
-  return pd.DataFrame(data=airport, columns=["airport"]), pd.DataFrame(data=bus_station, columns=["bus_station"]), pd.DataFrame(data=train_station, columns=["train_station"])
+  return pd.DataFrame(data=airports, columns=["airport"]), pd.DataFrame(data=bus_stations, columns=["bus_station"]), pd.DataFrame(data=train_stations, columns=["train_station"])
 
     
 # read raw dataset
 dir_path = os.getcwd()
 raw_dataset = pd.read_excel(dir_path + "/datasets/raw_dataset.xlsx")
 
-# separate dataset by knowledge graph entities
+# separate data by knowledge graph entities
 cities = raw_dataset.filter(["city"], axis=1).drop_duplicates(inplace=False)
 museums = raw_dataset.filter([
   "name", 
@@ -68,9 +68,17 @@ museums = raw_dataset.filter([
   "latitude"], axis=1)
   
 transportations = raw_dataset.filter(["place_to_museum"], axis=1)
-airport, bus_station, train_station = categorize_transportations(transportations["place_to_museum"])
+entry_ticket_category = raw_dataset.filter(["entry_ticket_category"], axis=1)
+other_ticket_category = raw_dataset.filter(["other_ticket_category"], axis=1).dropna()
 
-entry_tickets = raw_dataset.filter(["entry_ticket_category"], axis=1)
-other_tickets = raw_dataset.filter(["other_ticket_category"], axis=1)
+# categorize categorical dataframe
+airports, bus_stations, train_stations = categorize_transportations(transportations["place_to_museum"])
 
-print()
+# remove duplicates
+entry_tickets = list(remove_duplicates(entry_ticket_category["entry_ticket_category"]))
+entry_tickets = pd.DataFrame(data=entry_tickets, columns=["entry_ticket"])
+
+other_tickets = list(remove_duplicates(other_ticket_category["other_ticket_category"]))
+other_tickets = pd.DataFrame(data=other_tickets, columns=["other_ticket"])
+
+print(other_tickets)

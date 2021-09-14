@@ -36,6 +36,7 @@ entry-ticket-category sub ticket-category,
   relates entry-for as entry;
 
 other-ticket-category sub ticket-category,
+  owns name,
   relates other-ticket-for as ticket,
   relates other-entry-for as entry;
 
