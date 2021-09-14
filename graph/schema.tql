@@ -1,0 +1,88 @@
+define
+
+## Attributes ##
+name sub attribute, value string;
+address sub attribute, value string;
+phone-number sub attribute, value string;
+email sub attribute, value string;
+website sub attribute, value string;
+facebook sub attribute, value string;
+twitter sub attribute, value string;
+instagram sub attribute, value string;
+latitude sub attribute, value double;
+longitude sub attribute, value double;
+distance sub attribute, value double;
+price sub attribute, value double;
+###############
+
+## Relations ##
+location sub relation,
+  relates located-in,
+  relates location-for;
+
+transportation sub relation,
+  owns distance,
+  relates destination-to,
+  relates destination-from;
+
+ticket-category sub relation,
+  abstract,
+  owns price,
+  relates ticket,
+  relates entry;
+
+entry-ticket-category sub ticket-category,
+  relates ticket-for as ticket,
+  relates entry-for as entry;
+
+other-ticket-category sub ticket-category,
+  relates other-ticket-for as ticket,
+  relates other-entry-for as entry;
+
+###############
+
+## Entities ##
+city sub entity, 
+  owns name @key,
+  plays location:located-in;
+
+museum sub entity,
+  owns name @key,
+  owns address,
+  owns phone-number,
+  owns website,
+  owns email,
+  owns facebook,
+  owns twitter,
+  owns instagram,
+  owns latitude,
+  owns longitude,
+  plays location:location-for,
+  plays transportation:destination-to,
+  plays entry-ticket-category:entry-for,
+  plays other-ticket-category:other-entry-for;
+
+train-station sub entity,
+  owns name @key,
+  plays transportation:destination-from,
+  plays location:location-for;
+
+bus-station sub entity,
+  owns name @key,
+  plays transportation:destination-from,
+  plays location:location-for;
+
+airport sub entity,
+  owns name @key,
+  plays transportation:destination-from,
+  plays location:location-for;
+
+entry-ticket sub entity,
+  owns name @key,
+  plays entry-ticket-category:ticket-for;
+
+other-ticket sub entity,
+  owns name @key,
+  plays other-ticket-category:other-ticket-for;
+
+###############
