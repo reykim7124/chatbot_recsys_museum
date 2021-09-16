@@ -1,5 +1,6 @@
 from typedb.client import TypeDB, SessionType, TransactionType
 import os
+import csv
 
 
 def build_museum_recsys_chatbot_graph(inputs):
@@ -9,6 +10,15 @@ def build_museum_recsys_chatbot_graph(inputs):
                 print(
                     "Loading from [" + input["data_path"] + "] into TypeDB ...")
                 load_data_into_typedb(input, session)
+
+
+def parse_data_to_dictionaries(input):
+    items = []
+    with open(input["data_path"] + ".csv") as data:
+        for row in csv.DictReader(data, skipinitialspace=True):
+            item = {key: value for key, value in row.items()}
+            items.append(item)
+    return items
 
 
 def load_data_into_typedb(input, session):
