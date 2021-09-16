@@ -35,6 +35,33 @@ def load_data_into_typedb(input, session):
           " items from [ " + input["data_path"] + "] into TypeDB.\n")
 
 
+def museum_template(museum):
+    typeql_insert_query = "insert $museum isa museum"
+    typeql_insert_query += ', has name "' + museum["name"] + '"'
+    typeql_insert_query += ', has address "' + museum["address"] + '"'
+    typeql_insert_query += ', has phone_number "' + \
+        museum["phone_number"] + '"'
+    typeql_insert_query += ', has longitude "' + museum["longitude"] + '"'
+    typeql_insert_query += ', has latitude "' + museum["latitude"] + '"'
+
+    if "email" in museum:
+        typeql_insert_query += ', has email "' + museum["email"] + '"'
+
+    if "website" in museum:
+        typeql_insert_query += ', has website "' + museum["website"] + '"'
+
+    if "facebook" in museum:
+        typeql_insert_query += ', has facebook "' + museum["facebook"] + '"'
+
+    if "twitter" in museum:
+        typeql_insert_query += ', has twitter "' + museum["twitter"] + '"'
+
+    if "instagram" in museum:
+        typeql_insert_query += ', has instagram "' + museum["instagram"] + '"'
+
+    return typeql_insert_query
+
+
 dir_path = os.getcwd()
 # file path & functions for inserting data to knowledge graph
 inputs = [
