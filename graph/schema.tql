@@ -65,18 +65,15 @@ museum sub entity,
 
 train-station sub entity,
   owns name @key,
-  plays transportation:destination-from,
-  plays location:location-for;
+  plays transportation:destination-from;
 
 bus-station sub entity,
   owns name @key,
-  plays transportation:destination-from,
-  plays location:location-for;
+  plays transportation:destination-from;
 
 airport sub entity,
   owns name @key,
-  plays transportation:destination-from,
-  plays location:location-for;
+  plays transportation:destination-from;
 
 entry-ticket sub entity,
   owns name @key,
