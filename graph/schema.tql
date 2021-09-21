@@ -9,6 +9,8 @@ website sub attribute, value string;
 facebook sub attribute, value string;
 twitter sub attribute, value string;
 instagram sub attribute, value string;
+open sub attribute, value string;
+closed sub attribute, value string;
 latitude sub attribute, value double;
 longitude sub attribute, value double;
 distance sub attribute, value double;
@@ -20,25 +22,49 @@ location sub relation,
   relates located-in,
   relates location-for;
 
-transportation sub relation,
+transport sub relation,
   owns distance,
   relates destination-to,
   relates destination-from;
 
+museum-category sub relation,
+  relates categorize-as,
+  relates category-for;
+
 ticket-category sub relation,
   abstract,
   owns price,
-  relates ticket,
-  relates entry;
+  relates tickets,
+  relates entries;
 
-entry-ticket-category sub ticket-category,
-  relates ticket-for as ticket,
-  relates entry-for as entry;
+ticket-1 sub ticket-category,
+  relates ticket-1-for as tickets,
+  relates entry-1-for as entries;
 
-other-ticket-category sub ticket-category,
+ticket-2 sub ticket-category,
   owns name,
-  relates other-ticket-for as ticket,
-  relates other-entry-for as entry;
+  relates ticket-2-for as tickets,
+  relates entry-2-for as entries;
+
+schedule-category sub relation,
+  abstract,
+  owns name,
+  owns open,
+  owns closed,
+  relates schedule-at,
+  relates schedule-for;
+
+schedule-1 sub schedule-category,
+  relates schedule-1-at as schedule-at,
+  relates schedule-1-for as schedule-for;
+
+schedule-2 sub schedule-category,
+  relates schedule-2-at as schedule-at,
+  relates schedule-2-for as schedule-for;
+
+schedule-3 sub schedule-category,
+  relates schedule-3-at as schedule-at,
+  relates schedule-3-for as schedule-for;
 
 ###############
 
@@ -59,28 +85,36 @@ museum sub entity,
   owns latitude,
   owns longitude,
   plays location:location-for,
-  plays transportation:destination-to,
-  plays entry-ticket-category:entry-for,
-  plays other-ticket-category:other-entry-for;
+  plays transport:destination-to,
+  plays museum-category:category-for,
+  plays ticket-1:ticket-1-for,
+  plays ticket-2:ticket-2-for,
+  plays schedule-1:schedule-1-for,
+  plays schedule-2:schedule-2-for,
+  plays schedule-3:schedule-3-for;
 
-train-station sub entity,
+transportation sub entity,
+  abstract,
   owns name @key,
-  plays transportation:destination-from;
+  plays transport:destination-from;
 
-bus-station sub entity,
-  owns name @key,
-  plays transportation:destination-from;
+train-station sub transportation;
+bus-station sub transportation;
+airport sub transportation;
 
-airport sub entity,
+ticket sub entity,
   owns name @key,
-  plays transportation:destination-from;
+  plays ticket-1:entry-1-for,
+  plays ticket-2:entry-2-for;
 
-entry-ticket sub entity,
+schedule sub entity,
   owns name @key,
-  plays entry-ticket-category:ticket-for;
+  plays schedule-1:schedule-1-at,
+  plays schedule-2:schedule-2-at,
+  plays schedule-3:schedule-3-at;
 
-other-ticket sub entity,
+category sub entity,
   owns name @key,
-  plays other-ticket-category:other-ticket-for;
+  plays museum-category:categorize-as;
 
 ###############
