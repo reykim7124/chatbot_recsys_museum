@@ -1,0 +1,140 @@
+define
+
+## Attributes ##
+place-name sub attribute, value string;
+category-name sub attribute, value string;
+address-text sub attribute, value string;
+phone-number sub attribute, value string;
+email sub attribute, value string;
+website sub attribute, value string;
+facebook sub attribute, value string;
+twitter sub attribute, value string;
+instagram sub attribute, value string;
+distance sub attribute, value double;
+latitude sub attribute, value double;
+longitude sub attribute, value double;
+###############
+
+## Relations ##
+location sub relation,
+  relates falls-within,
+  relates contains;
+
+categories sub relation,
+  relates has-museum,
+  relates has-category;
+
+transportations sub relation,
+  owns distance,
+  relates has-museum,
+  relates has-transportation;
+
+transportation-categories sub relation,
+  relates has-category,
+  relates has-transportation;
+
+addresses sub relation,
+  relates has-museum,
+  relates hasAddress;
+
+coordinates sub relation,
+  relates has-museum,
+  relates has-coordinate;
+
+###############
+
+## Entities ##
+museum sub entity,
+  owns place-name @key,
+  owns phone-number,
+  owns website,
+  owns email,
+  owns facebook,
+  owns twitter,
+  owns instagram;
+
+museum sub entity,
+  plays location:contains,
+  plays categories:has-museum,
+  plays addresses:has-museum,
+  plays transportations:has-transportation,
+  plays coordinates:has-museum;
+
+city sub entity,
+  owns place-name @key,
+  plays location:falls-within;
+
+museum-category sub entity,
+  owns category-name @key,
+  plays categories:has-category;
+
+address sub entity,
+  owns address-text @key,
+  plays addresses:hasAddress,
+  plays location:contains;
+
+coordinate sub entity,
+  owns latitude,
+  owns longitude,
+  plays location:contains,
+  plays coordinates:has-coordinate;
+
+transportation sub entity,
+  owns place-name @key,
+  plays transportations:has-transportation,
+  plays transportation-categories:has-transportation;
+
+transportation-category sub entity,
+  owns category-name @key,
+  plays transportation-categories:has-category;
+
+###############
+
+## Rules ##
+rule address-within-city:
+  when {
+    (has-museum: $m, hasAddress: $a) isa addresses;
+    (falls-within: $c, contains: $m) isa location;
+  } then {
+    (falls-within: $c, contains: $a) isa location;
+  };
+
+rule coordinate-within-city:
+  when {
+    (has-museum: $m, has-coordinate: $co) isa coordinates;
+    (falls-within: $c, contains: $m) isa location;
+  } then {
+    (falls-within: $c, contains: $co) isa location;
+  };
+
+rule transportation-has-type-bandara:
+  when {
+    $tr isa transportation;
+    $tr has place-name $pn;
+    $pn "Bandara";
+    $tc isa transportation-category, has category-name "bandara";
+  } then {
+    (has-category: $tc, has-transportation: $tr) isa transportation-categories;
+  };
+
+rule transportation-has-type-bis:
+  when {
+    $tr isa transportation;
+    $tr has place-name $pn;
+    $pn "Terminal";
+    $tc isa transportation-category, has category-name "bis";
+  } then {
+    (has-category: $tc, has-transportation: $tr) isa transportation-categories;
+  };
+
+rule transportation-has-type-kereta:
+  when {
+    $tr isa transportation;
+    $tr has place-name $pn;
+    $pn "Stasiun";
+    $tc isa transportation-category, has category-name "kereta";
+  } then {
+    (has-category: $tc, has-transportation: $tr) isa transportation-categories;
+  };
+
+###########
