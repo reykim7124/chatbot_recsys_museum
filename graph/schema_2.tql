@@ -1,49 +1,22 @@
 define
 
-## Attributes ##
-place-name sub attribute, value string;
+## attributes ##
 category-name sub attribute, value string;
-address-text sub attribute, value string;
+alt-name sub attribute, value string;
+###############
+
+## museum ##
 phone-number sub attribute, value string;
 email sub attribute, value string;
 website sub attribute, value string;
 facebook sub attribute, value string;
 twitter sub attribute, value string;
 instagram sub attribute, value string;
-distance sub attribute, value double;
-latitude sub attribute, value double;
-longitude sub attribute, value double;
-###############
-
-## Relations ##
-location sub relation,
-  relates falls-within,
-  relates contains;
 
 categories sub relation,
   relates has-museum,
   relates has-category;
 
-transportations sub relation,
-  owns distance,
-  relates has-museum,
-  relates has-transportation;
-
-transportation-categories sub relation,
-  relates has-category,
-  relates has-transportation;
-
-addresses sub relation,
-  relates has-museum,
-  relates hasAddress;
-
-coordinates sub relation,
-  relates has-museum,
-  relates has-coordinate;
-
-###############
-
-## Entities ##
 museum sub entity,
   owns place-name @key,
   owns phone-number,
@@ -58,19 +31,49 @@ museum sub entity,
   plays categories:has-museum,
   plays addresses:has-museum,
   plays transportations:has-transportation,
-  plays coordinates:has-museum;
-
-city sub entity,
-  owns place-name @key,
-  plays location:falls-within;
+  plays coordinates:has-museum,
+  plays ticket-categories:has-museum,
+  plays ticket-types:has-museum,
+  plays schedule-categories:has-museum,
+  plays schedule-days:has-museum;
 
 museum-category sub entity,
   owns category-name @key,
   plays categories:has-category;
 
+###############
+
+## locations ##
+place-name sub attribute, value string;
+latitude sub attribute, value double;
+longitude sub attribute, value double;
+distance sub attribute, value double;
+address-text sub attribute, value string;
+
+location sub relation,
+  relates falls-within,
+  relates contains;
+
+transportations sub relation,
+  owns distance,
+  relates has-museum,
+  relates has-transportation;
+
+addresses sub relation,
+  relates has-museum,
+  relates has-address;
+
+coordinates sub relation,
+  relates has-museum,
+  relates has-coordinate;
+
+city sub entity,
+  owns place-name @key,
+  plays location:falls-within;
+
 address sub entity,
   owns address-text @key,
-  plays addresses:hasAddress,
+  plays addresses:has-address,
   plays location:contains;
 
 coordinate sub entity,
@@ -81,60 +84,94 @@ coordinate sub entity,
 
 transportation sub entity,
   owns place-name @key,
-  plays transportations:has-transportation,
-  plays transportation-categories:has-transportation;
-
-transportation-category sub entity,
-  owns category-name @key,
-  plays transportation-categories:has-category;
+  plays transportations:has-transportation;
 
 ###############
 
-## Rules ##
+## tickets ##
+ticket-name sub attribute, value string;
+price sub attribute, value double;
+
+ticket-types sub relation,
+  owns price,
+  relates has-ticket-type,
+  relates has-museum,
+  relates has-ticket-category;
+
+ticket-categories sub relation,
+  owns alt-name,
+  relates has-museum,
+  relates has-ticket-category;
+
+ticket-type sub entity,
+  owns ticket-name @key,
+  plays ticket-types:has-ticket-type;
+
+ticket-category sub entity,
+  owns category-name @key,
+  plays ticket-types:has-ticket-category,
+  plays ticket-categories:has-ticket-category;
+
+###############
+
+## schedules ##
+open sub attribute, value string;
+closed sub attribute, value string;
+day sub attribute, value string;
+
+schedule-categories sub relation,
+  owns alt-name,
+  owns open,
+  owns closed,
+  relates has-museum,
+  relates has-schedule-category;
+
+schedule-days sub relation,
+  relates has-museum,
+  relates has-schedule-category,
+  relates has-schedule-day;
+
+schedule-category sub entity,
+  owns category-name @key,
+  plays schedule-categories:has-schedule-category,
+  plays schedule-days:has-schedule-category;
+
+schedule-day sub entity,
+  owns day @key,
+  plays schedule-days:has-schedule-day;
+
+###############
+
+## rules ##
 rule address-within-city:
   when {
-    (has-museum: $m, hasAddress: $a) isa addresses;
     (falls-within: $c, contains: $m) isa location;
+    (has-museum: $m, has-address: $a) isa addresses;
   } then {
     (falls-within: $c, contains: $a) isa location;
   };
 
 rule coordinate-within-city:
   when {
-    (has-museum: $m, has-coordinate: $co) isa coordinates;
     (falls-within: $c, contains: $m) isa location;
+    (has-museum: $m, has-coordinate: $co) isa coordinates;
   } then {
     (falls-within: $c, contains: $co) isa location;
   };
 
-rule transportation-has-type-bandara:
+rule museum-ticket-types:
   when {
-    $tr isa transportation;
-    $tr has place-name $pn;
-    $pn "Bandara";
-    $tc isa transportation-category, has category-name "bandara";
+    (has-museum: $m, has-ticket-category: $tc) isa ticket-categories;
+    (has-ticket-category: $tc, has-ticket-type: $tt) isa ticket-types;
   } then {
-    (has-category: $tc, has-transportation: $tr) isa transportation-categories;
+    (has-museum: $m, has-ticket-type: $tt) isa ticket-types;
   };
 
-rule transportation-has-type-bis:
+rule museum-schedule-days:
   when {
-    $tr isa transportation;
-    $tr has place-name $pn;
-    $pn "Terminal";
-    $tc isa transportation-category, has category-name "bis";
+    (has-museum: $m, has-schedule-category: $sc) isa schedule-categories;
+    (has-schedule-category: $sc, has-schedule-day: $sd) isa schedule-days;
   } then {
-    (has-category: $tc, has-transportation: $tr) isa transportation-categories;
+    (has-museum: $m, has-schedule-day: $sd) isa schedule-days;
   };
-
-rule transportation-has-type-kereta:
-  when {
-    $tr isa transportation;
-    $tr has place-name $pn;
-    $pn "Stasiun";
-    $tc isa transportation-category, has category-name "kereta";
-  } then {
-    (has-category: $tc, has-transportation: $tr) isa transportation-categories;
-  };
-
 ###########
