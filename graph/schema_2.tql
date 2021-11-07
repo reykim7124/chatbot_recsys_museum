@@ -13,7 +13,7 @@ facebook sub attribute, value string;
 twitter sub attribute, value string;
 instagram sub attribute, value string;
 
-categories sub relation,
+museum-categories sub relation,
   relates has-museum,
   relates has-category;
 
@@ -28,7 +28,7 @@ museum sub entity,
 
 museum sub entity,
   plays location:contains,
-  plays categories:has-museum,
+  plays museum-categories:has-museum,
   plays addresses:has-museum,
   plays transportations:has-transportation,
   plays coordinates:has-museum,
@@ -39,7 +39,7 @@ museum sub entity,
 
 museum-category sub entity,
   owns category-name @key,
-  plays categories:has-category;
+  plays museum-categories:has-category;
 
 ###############
 
