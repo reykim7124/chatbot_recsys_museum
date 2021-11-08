@@ -30,7 +30,7 @@ museum sub entity,
   plays location:contains,
   plays museum-categories:has-museum,
   plays addresses:has-museum,
-  plays transportations:has-transportation,
+  plays transportations:has-museum,
   plays coordinates:has-museum,
   plays ticket-categories:has-museum,
   plays ticket-types:has-museum,
@@ -67,6 +67,10 @@ coordinates sub relation,
   relates has-museum,
   relates has-coordinate;
 
+transportation-types sub relation,
+  relates has-transportation,
+  relates has-type;
+
 city sub entity,
   owns place-name @key,
   plays location:falls-within;
@@ -84,7 +88,12 @@ coordinate sub entity,
 
 transportation sub entity,
   owns place-name @key,
+  plays transportation-types:has-transportation,
   plays transportations:has-transportation;
+
+transportation-type sub entity,
+  owns category-name @key,
+  plays transportation-types:has-type;
 
 ###############
 
@@ -173,5 +182,35 @@ rule museum-schedule-days:
     (has-schedule-category: $sc, has-schedule-day: $sd) isa schedule-days;
   } then {
     (has-museum: $m, has-schedule-day: $sd) isa schedule-days;
+  };
+
+rule transportation-has-type-pesawat:
+  when {
+    $t isa transportation;
+    $t has place-name $pn;
+    $pn contains "Bandara";
+    $ty isa transportation-type, has category-name "pesawat";
+  } then {
+    (has-transportation: $t, has-type: $ty) isa transportation-types;
+  };
+
+rule transportation-has-type-bis:
+  when {
+    $t isa transportation;
+    $t has place-name $pn;
+    $pn contains "Terminal";
+    $ty isa transportation-type, has category-name "bis";
+  } then {
+    (has-transportation: $t, has-type: $ty) isa transportation-types;
+  };
+
+rule transportation-has-type-kereta:
+  when {
+    $t isa transportation;
+    $t has place-name $pn;
+    $pn contains "Stasiun";
+    $ty isa transportation-type, has category-name "kereta";
+  } then {
+    (has-transportation: $t, has-type: $ty) isa transportation-types;
   };
 ###########
