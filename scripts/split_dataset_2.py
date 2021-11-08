@@ -67,6 +67,7 @@ ticket_type = pd.DataFrame(data=ticket_type, columns=["ticket_type"])
 
 transportation = list(remove_duplicates(raw_dataset["public_transportation"]))
 transportation = pd.DataFrame(data=transportation, columns=["transportation"])
+transportation_type = pd.DataFrame(data={"transportation_type": ["pesawat", "kereta", "bis"]})
 
 # create dataframe for knowledge graph city relation
 museum_city = raw_dataset.filter(["name", "city"], axis=1)
@@ -84,34 +85,41 @@ museum_transportation = explode_datasets(museum_transportation, ["name"], [
 museum_address = raw_dataset.filter(["name", "address"], axis=1)
 
 # create dataframe for knowledge graph coordinates relation
-museum_coordinate = raw_dataset.filter(["name", "city"], axis=1)
+museum_coordinate = raw_dataset.filter(["name", "latitude", "longitude"], axis=1)
 
 # create dataframe for knowledge graph ticket relation
 museum_ticket_1 = raw_dataset.filter(["name", "ticket_1", "ticket_price_1"], axis=1)
 museum_ticket_1 = explode_datasets(museum_ticket_1, ["name"], ["ticket_1", "ticket_price_1"])
 museum_ticket_2 = raw_dataset.filter(["name", "ticket_2", "ticket_price_2", "ticket_name_2"], axis=1)
+museum_ticket_2.dropna(inplace=True, subset=["ticket_name_2"])
 museum_ticket_2 = explode_datasets(museum_ticket_2, ["name", "ticket_name_2"], ["ticket_2", "ticket_price_2"])
 
 # create dataframe for knowledge graph schedule relation
 museum_schedule_1 = raw_dataset.filter(["name", "schedule_1", "schedule_name_1", "open_1", "closed_1"], axis=1)
 museum_schedule_1 = explode_datasets(museum_schedule_1, ["name", "schedule_name_1", "open_1", "closed_1"], ["schedule_1"])
 museum_schedule_2 = raw_dataset.filter(["name", "schedule_2", "schedule_name_2", "open_2", "closed_2"], axis=1)
+museum_schedule_2.dropna(inplace=True, subset=["schedule_2"])
 museum_schedule_2 = explode_datasets(museum_schedule_2, ["name", "schedule_name_2", "open_2", "closed_2"], ["schedule_2"])
 museum_schedule_3 = raw_dataset.filter(["name", "schedule_3", "schedule_name_3", "open_3", "closed_3"], axis=1)
+museum_schedule_3.dropna(inplace=True, subset=["schedule_3"])
 museum_schedule_3 = explode_datasets(museum_schedule_3, ["name", "schedule_name_3", "open_3", "closed_3"], ["schedule_3"])
 
-# write all entities and relations to csv
+# write all entities to csv
 museum.to_csv(dir_path + "/datasets/split_dataset/museum.csv", index=False)
 city.to_csv(dir_path + "/datasets/split_dataset//city.csv", index=False)
 address.to_csv(dir_path + "/datasets/split_dataset/address.csv", index=False)
 coordinate.to_csv(dir_path + "/datasets/split_dataset/coordinate.csv", index=False)
 category.to_csv(dir_path + "/datasets/split_dataset/category.csv", index=False)
 transportation.to_csv(dir_path + "/datasets/split_dataset/transportation.csv", index=False)
+transportation_type.to_csv(dir_path + "/datasets/split_dataset/transportation_type.csv", index=False)
 ticket_category.to_csv(dir_path + "/datasets/split_dataset/ticket_category.csv", index=False)
 ticket_type.to_csv(dir_path + "/datasets/split_dataset/ticket_type.csv", index=False)
 schedule_category.to_csv(dir_path + "/datasets/split_dataset/schedule_category.csv", index=False)
 schedule_day.to_csv(dir_path + "/datasets/split_dataset/schedule_day.csv", index=False)
+
 museum_city.to_csv(dir_path + "/datasets/split_dataset/museum_location.csv", index=False)
+museum_address.to_csv(dir_path + "/datasets/split_dataset/museum_address.csv", index=False)
+museum_coordinate.to_csv(dir_path + "/datasets/split_dataset/museum_coordinate.csv", index=False)
 museum_category.to_csv(dir_path + "/datasets/split_dataset/museum_category.csv", index=False)
 museum_transportation.to_csv(dir_path + "/datasets/split_dataset/museum_transportation.csv", index=False)
 museum_ticket_1.to_csv(
