@@ -11,13 +11,6 @@ def remove_duplicates(x):
 
     Return a set
     """
-    # set_of_x = set()
-    # # loop through all values and convert them to list
-    # for values in x:
-    #     names = values.split(", ")
-    #     # add values to set_of_transportation set
-    #     for name in names:
-    #         set_of_x.add(name)
     x = x.apply(lambda x: x.split(", "))
     x = x.explode()
     x = x.drop_duplicates()
