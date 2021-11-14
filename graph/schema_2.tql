@@ -124,8 +124,8 @@ ticket-category sub entity,
 ###############
 
 ## schedules ##
-open sub attribute, value string;
-closed sub attribute, value string;
+open sub attribute, value double;
+closed sub attribute, value double;
 day sub attribute, value string;
 
 schedule-categories sub relation,
