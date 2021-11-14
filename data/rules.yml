@@ -2,12 +2,30 @@ version: "2.0"
 
 rules:
 
+- rule: Say `hello` when the user starts a conversation with intent `greet`
+  conversation_start: true
+  steps:
+  - intent: greet
+  - action: utter_greet
+
 - rule: Say goodbye anytime the user says goodbye
   steps:
   - intent: goodbye
   - action: utter_goodbye
 
-- rule: Say 'I am a bot' anytime the user challenges
+- rule: activate recommend form
   steps:
-  - intent: bot_challenge
-  - action: utter_iamabot
+  - intent: user_agree_recommend
+  - action: utter_user_agree_recommend
+  - action: recommend_form
+  - active_loop: recommend_form
+
+- rule: submit recommend form
+  condition:
+  - active_loop: recommend_form
+  steps:
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_submit_recommend_form
+  - action: utter_slot_values_recommend_form

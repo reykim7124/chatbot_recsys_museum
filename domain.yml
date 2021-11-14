@@ -1,40 +1,90 @@
 version: '2.0'
+
 config:
   store_entities_as_slots: true
-session_config:
-  session_expiration_time: 60
-  carry_over_slots_to_new_session: true
+
 intents:
-- greet:
-    use_entities: true
-- goodbye:
-    use_entities: true
-- affirm:
-    use_entities: true
-- deny:
-    use_entities: true
-- mood_great:
-    use_entities: true
-- mood_unhappy:
-    use_entities: true
-- bot_challenge:
-    use_entities: true
-entities: []
-slots: {}
+  - greet:
+      use_entities: []
+
+  - goodbye:
+      use_entities: []
+
+  - user_agree_recommend:
+      use_entities: []
+
+  - cancel_recommendation:
+      use_entities: []
+
+  - use_public_transport
+  - schedule_hour
+
+entities:
+  - use_public_transport:
+      roles:
+      - use
+      - not_use
+  - schedule_hour
+
+slots:
+  use_public_transport:
+    type: text
+    auto_fill: true
+    influence_conversation: false
+  schedule_hour:
+    type: text
+    auto_fill: true
+    influence_conversation: false
+
 responses:
   utter_greet:
-  - text: Hey! How are you?
-  utter_cheer_up:
-  - image: https://i.imgur.com/nGF1K8f.jpg
-    text: 'Here is something to cheer you up:'
-  utter_did_that_help:
-  - text: Did that help you?
-  utter_happy:
-  - text: Great, carry on!
+  - text: |-
+      Hai! Perkenalkan aku Mersy :D
+      Aku adalah chatbot untuk merekomendasikan Museum di Kota Jakarta.
+      Apakah kamu ingin diberikan rekomendasi museum?
   utter_goodbye:
   - text: Bye
-  utter_iamabot:
-  - text: I am a bot, powered by Rasa.
-actions: []
-forms: {}
-e2e_actions: []
+
+  utter_user_agree_recommend:
+  - text: Baiklah, tolong jawab pertanyaan - pertanyaan berikut sesuai preferensi kamu :)
+
+  utter_cancel_recommendation:
+  - text: Proses rekomendasi dibatalkan
+
+  utter_ask_use_public_transport:
+  - text: Apakah kamu akan menggunakan kendaraan umum, kendaraan pribadi atau tidak pakai kendaraan?
+
+  utter_ask_schedule_hour:
+  - text: Berangkat pagi, siang, sore atau malam?
+
+  utter_submit_recommend_form:
+  - text: Terima kasih! Aku sedang memproses jawaban kamu...
+
+  utter_slot_values_recommend_form:
+  - text: Anda menjawab {use_public_transport}, {schedule_hour}
+
+actions:
+  - utter_greet
+  - utter_goodbye
+  - utter_user_agree_recommend
+  - utter_cancel_recommendation
+  - utter_ask_use_public_transport
+  - utter_ask_schedule_hour
+  - utter_submit_recommend_form
+  - utter_slot_values_recommend_form
+
+forms:
+  recommend_form:
+    required_slots:
+      use_public_transport:
+        - type: from_entity
+          entity: use_public_transport
+          intent: use_public_transport
+      schedule_hour:
+        - type: from_entity
+          entity: schedule_hour
+          intent: schedule_hour
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: false

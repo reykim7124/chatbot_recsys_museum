@@ -1,92 +1,119 @@
 version: "2.0"
-
 nlu:
 - intent: greet
   examples: |
     - hey
     - hello
     - hi
-    - hello there
-    - good morning
-    - good evening
-    - moin
-    - hey there
-    - let's go
-    - hey dude
-    - goodmorning
-    - goodevening
-    - good afternoon
-
+    - hay
+    - helo
+    - halo
+    - hallo
+    - hai
+    - hei
+    - apa kabar
+    - apakabar
+    - pakabar
+    - yo
+    - halo gan
+    - halo bro
+    - yo yo yo
+    - permisi
+    - prmsi
 - intent: goodbye
   examples: |
-    - good afternoon
-    - cu
-    - good by
-    - cee you later
-    - good night
+    - dadah
+    - dada
+    - dah
+    - selamat tinggal
+    - selamattinggal
+    - sampai jumpa
+    - sampaijumpa
     - bye
-    - goodbye
-    - have a nice day
-    - see you around
-    - bye bye
-    - see you later
-
-- intent: affirm
+    - terima kasih
+    - terimakasih
+    - makasih
+- intent: user_agree_recommend
   examples: |
-    - yes
-    - y
-    - indeed
-    - of course
-    - that sounds good
-    - correct
-
-- intent: deny
+    - ya mau
+    - iya mau
+    - iya saya mau
+    - aku mau
+    - saya mau rekomendasi museum
+    - aku mau rekomendasi
+    - berikan saya rekomendasi museum
+    - berikan rekomendasi
+    - rekomendasi
+    - rekomen
+    - rekomendasikan museum
+    - rekomendasi kan aku museum
+    - rekomendasikan
+    - rekomendasi kan
+    - mau rekomendasi museum
+    - mau rekomendasi
+    - tolong berikan rekomendasi
+    - tolong berikan saya rekomendasi
+    - tolong rekomendasikan
+    - tolong rekomendasi kan
+    - tolong rekomendasikan museum
+    - tolong rekomendasi kan museum
+    - tolong rekomendasi nya
+    - tolong rekomendasiin museum
+    - minta rekomendasi
+    - minta rekomendasi museum
+    - minta tolong rekomendasi museum
+    - mau dong mersy
+    - tentu
+    - mau banget
+    - tentu saja
+    - tentu banget
+    - ingin
+    - silahkan
+    - silah kan
+    - iya
+    - mau
+- intent: cancel_recommendation
   examples: |
-    - no
-    - n
-    - never
-    - I don't think so
-    - don't like that
-    - no way
-    - not really
-
-- intent: mood_great
+    - tidak mau
+    - tidak jadi
+    - gk mau
+    - gak mau
+    - batal
+    - batalkan
+    - batal kan
+    - saya tidak mau
+    - aku gk mau
+    - saya mau batal
+    - aku mau batal
+    - tidak mau rekomendasi
+    - tidak jadi rekomendasi
+    - batal rekomendasi
+    - batalkan rekomendasi
+    - batal kan rekomendasi
+- intent: use_public_transport
   examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
-
-- intent: mood_unhappy
+    - [kendaraan pribadi]{"entity": "use_public_transport", "role": "not_use"}
+    - [kendaraan umum]{"entity": "use_public_transport", "role": "use"}
+    - [umum]{"entity": "use_public_transport", "role": "use", "value": "kendaraan umum"}
+    - [pribadi]{"entity": "use_public_transport", "role": "not_use", "value": "kendaraan pribadi"}
+    - [tidak naik kendaraan]{"entity": "use_public_transport", "role": "not_use", "value": "tidak pakai kendaraan"}
+    - [tidak pakai kendaraan]{"entity": "use_public_transport", "role": "not_use"}
+    - [kendaraan umum]{"entity": "use_public_transport", "role": "use"}
+- intent: schedule_hour
   examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
-
-- intent: bot_challenge
+    - di [pagi](schedule_hour) hari
+    - berangkat [siang](schedule_hour)
+    - aku berangkat [sore](schedule_hour)
+    - saya pergi di [malam](schedule_hour)
+    - [sore](schedule_hour)
+    - [sore](schedule_hour) hari
+    - [pagi](schedule_hour)
+- synonym: kendaraan umum
   examples: |
-    - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
+    - umum
+- synonym: kendaraan pribadi
+  examples: |
+    - pribadi
+- synonym: tidak pakai kendaraan
+  examples: |
+    - tidak naik kendaraan
