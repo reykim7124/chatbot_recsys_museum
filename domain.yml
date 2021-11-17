@@ -18,6 +18,8 @@ intents:
 
   - use_public_transport
   - schedule_hour
+  - schedule_day
+  - ticket_price
 
 entities:
   - use_public_transport:
@@ -25,14 +27,32 @@ entities:
       - use
       - not_use
   - schedule_hour
+  - schedule_day
+  - ticket_price
 
 slots:
   use_public_transport:
-    type: text
+    type: categorical
+    values:
+      - kendaraan umum
+      - kendaraan pribadi
+      - tidak pakai kendaraan
     auto_fill: true
     influence_conversation: false
   schedule_hour:
-    type: text
+    type: categorical
+    values:
+      - pagi
+      - siang
+      - sore
+    auto_fill: true
+    influence_conversation: false
+  schedule_day:
+    type: list
+    auto_fill: true
+    influence_conversation: false
+  ticket_price:
+    type: list
     auto_fill: true
     influence_conversation: false
 
@@ -42,6 +62,7 @@ responses:
       Hai! Perkenalkan aku Mersy :D
       Aku adalah chatbot untuk merekomendasikan Museum di Kota Jakarta.
       Apakah kamu ingin diberikan rekomendasi museum?
+
   utter_goodbye:
   - text: Bye
 
@@ -55,13 +76,24 @@ responses:
   - text: Apakah kamu akan menggunakan kendaraan umum, kendaraan pribadi atau tidak pakai kendaraan?
 
   utter_ask_schedule_hour:
-  - text: Berangkat pagi, siang, sore atau malam?
+  - text: Berangkat pagi, siang, sore?
+
+  utter_ask_schedule_day:
+  - text: |-
+      Di hari apa saja kamu bisa mengunjungi museum? 
+      Kamu bisa menyebutkan lebih dari 1
+      contoh: senin, kamis, jumat 
+  
+  utter_ask_ticket_price:
+  - text: |-
+      Berapa harga tiket termurah dan termahal yang anda inginkan?
+      contoh: 1000 sampai 5000, 1000 dan 5000, 1000 - 5000, 1000 5000
 
   utter_submit_recommend_form:
   - text: Terima kasih! Aku sedang memproses jawaban kamu...
 
   utter_slot_values_recommend_form:
-  - text: Anda menjawab {use_public_transport}, {schedule_hour}
+  - text: Anda menjawab {use_public_transport}, {schedule_hour}, {schedule_day}, {ticket_price}
 
 actions:
   - utter_greet
@@ -70,6 +102,8 @@ actions:
   - utter_cancel_recommendation
   - utter_ask_use_public_transport
   - utter_ask_schedule_hour
+  - utter_ask_schedule_day
+  - utter_ask_ticket_price
   - utter_submit_recommend_form
   - utter_slot_values_recommend_form
 
@@ -84,6 +118,14 @@ forms:
         - type: from_entity
           entity: schedule_hour
           intent: schedule_hour
+      schedule_day:
+        - type: from_entity
+          entity: schedule_day
+          intent: schedule_day
+      ticket_price:
+        - type: from_entity
+          entity: ticket_price
+          intent: ticket_price
 
 session_config:
   session_expiration_time: 60
