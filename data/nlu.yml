@@ -1,92 +1,173 @@
 version: "2.0"
-
 nlu:
 - intent: greet
   examples: |
     - hey
     - hello
     - hi
-    - hello there
-    - good morning
-    - good evening
-    - moin
-    - hey there
-    - let's go
-    - hey dude
-    - goodmorning
-    - goodevening
-    - good afternoon
-
+    - hay
+    - helo
+    - halo
+    - hallo
+    - hai
+    - hei
+    - apa kabar
+    - apakabar
+    - pakabar
+    - yo
+    - halo gan
+    - halo bro
+    - yo yo yo
+    - permisi
+    - prmsi
 - intent: goodbye
   examples: |
-    - good afternoon
-    - cu
-    - good by
-    - cee you later
-    - good night
+    - dadah
+    - dada
+    - dah
+    - selamat tinggal
+    - selamattinggal
+    - sampai jumpa
+    - sampaijumpa
     - bye
-    - goodbye
-    - have a nice day
-    - see you around
-    - bye bye
-    - see you later
-
-- intent: affirm
+    - terima kasih
+    - terimakasih
+    - makasih
+- intent: user_agree_recommend
   examples: |
-    - yes
-    - y
-    - indeed
-    - of course
-    - that sounds good
-    - correct
-
-- intent: deny
+    - ya mau
+    - iya mau
+    - iya saya mau
+    - aku mau
+    - saya mau rekomendasi museum
+    - aku mau rekomendasi
+    - berikan saya rekomendasi museum
+    - berikan rekomendasi
+    - rekomendasi
+    - rekomen
+    - rekomendasikan museum
+    - rekomendasi kan aku museum
+    - rekomendasikan
+    - rekomendasi kan
+    - mau rekomendasi museum
+    - mau rekomendasi
+    - tolong berikan rekomendasi
+    - tolong berikan saya rekomendasi
+    - tolong rekomendasikan
+    - tolong rekomendasi kan
+    - tolong rekomendasikan museum
+    - tolong rekomendasi kan museum
+    - tolong rekomendasi nya
+    - tolong rekomendasiin museum
+    - minta rekomendasi
+    - minta rekomendasi museum
+    - minta tolong rekomendasi museum
+    - mau dong mersy
+    - tentu
+    - mau banget
+    - tentu saja
+    - tentu banget
+    - ingin
+    - silahkan
+    - silah kan
+    - mau
+    - mau dong
+    - ya
+- intent: cancel_recommendation
   examples: |
-    - no
-    - n
-    - never
-    - I don't think so
-    - don't like that
-    - no way
-    - not really
-
-- intent: mood_great
+    - tidak mau
+    - tidak jadi
+    - gk mau
+    - gak mau
+    - batal
+    - batalkan
+    - batal kan
+    - saya tidak mau
+    - aku gk mau
+    - saya mau batal
+    - aku mau batal
+    - tidak mau rekomendasi
+    - tidak jadi rekomendasi
+    - batal rekomendasi
+    - batalkan rekomendasi
+    - batal kan rekomendasi
+- intent: use_public_transport
   examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
-
-- intent: mood_unhappy
+    - [kendaraan pribadi]{"entity": "use_public_transport", "role": "not_use"}
+    - [kendaraan umum]{"entity": "use_public_transport", "role": "use"}
+    - [umum]{"entity": "use_public_transport", "role": "use", "value": "kendaraan umum"}
+    - [pribadi]{"entity": "use_public_transport", "role": "not_use", "value": "kendaraan pribadi"}
+    - [tidak naik kendaraan]{"entity": "use_public_transport", "role": "not_use", "value": "tidak pakai kendaraan"}
+    - [tidak naik]{"entity": "use_public_transport", "role": "not_use", "value": "tidak pakai kendaraan"}
+    - [tidak pakai]{"entity": "use_public_transport", "role": "not_use", "value": "tidak pakai kendaraan"}
+    - [tidak pakai kendaraan]{"entity": "use_public_transport", "role": "not_use"}
+    - [umum]{"entity": "use_public_transport", "role": "use", "value": "kendaraan umum"}
+- intent: schedule_hour
   examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
-
-- intent: bot_challenge
+    - di [pagi](schedule_hour) hari
+    - berangkat [siang](schedule_hour)
+    - aku berangkat [sore](schedule_hour)
+    - pergi [siang](schedule_hour)
+    - saya pergi di [pagi](schedule_hour) hari
+    - [sore](schedule_hour)
+    - [sore](schedule_hour) hari
+    - [pagi](schedule_hour)
+    - [siang](schedule_hour)
+    - [pagi](schedule_hour)
+- intent: schedule_day
   examples: |
-    - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
+    - [senin](schedule_day)
+    - [selasa](schedule_day)
+    - [rabu](schedule_day)
+    - [kamis](schedule_day)
+    - [jumat](schedule_day)
+    - [sabtu](schedule_day)
+    - [minggu](schedule_day)
+    - saya bisa berangkat di hari [senin](schedule_day), [selasa](schedule_day), [rabu](schedule_day)
+    - [kamis](schedule_day), [jumat](schedule_day), [sabtu](schedule_day)
+    - [minggu](schedule_day) [selasa](schedule_day) [senin](schedule_day)
+    - di hari [kamis](schedule_day) [minggu](schedule_day) [jumat](schedule_day)
+    - hari [rabu](schedule_day), [jumat](schedule_day), [senin](schedule_day)
+    - berangkat [senin](schedule_day), [minggu](schedule_day), [sabtu](schedule_day)
+    - di hari [senin](schedule_day) [rabu](schedule_day) [minggu](schedule_day)
+    - [senin](schedule_day), [selasa](schedule_day), [rabu](schedule_day), [kamis](schedule_day), [jumat](schedule_day)
+    - [minggu](schedule_day) [jumat](schedule_day) [selasa](schedule_day) [kamis](schedule_day) [rabu](schedule_day) [senin](schedule_day) [sabtu](schedule_day)
+    - [senin](schedule_day) [rabu](schedule_day) [sabtu](schedule_day)
+    - [selasa](schedule_day) [senin](schedule_day) [jumat](schedule_day) [sabtu](schedule_day) [rabu](schedule_day) [kamis](schedule_day) [minggu](schedule_day)
+    - [jumat](schedule_day) [sabtu](schedule_day) [minggu](schedule_day)
+    - [senin](schedule_day) [kamis](schedule_day) [rabu](schedule_day) [jumat](schedule_day), [selasa](schedule_day), [minggu](schedule_day), [sabtu](schedule_day)
+    - [senin](schedule_day) [selasa](schedule_day) [rabu](schedule_day) [kamis](schedule_day) [jumat](schedule_day) [sabtu](schedule_day) [minggu](schedule_day)
+    - [senin](schedule_day) [selasa](schedule_day) [rabu](schedule_day) [kamis](schedule_day) [jumat](schedule_day) [sabtu](schedule_day) [minggu](schedule_day)
+- intent: ticket_price
+  examples: |
+    - dari [5000](ticket_price) sampai [10000](ticket_price)
+    - [30000](ticket_price) hingga [200000](ticket_price)
+    - [2500](ticket_price) - [72500](ticket_price)
+    - [19250](ticket_price) [32500](ticket_price)
+    - [2000](ticket_price) [6000](ticket_price)
+    - [4000](ticket_price) - [10000](ticket_price)
+    - [5000](ticket_price) sampai [10000](ticket_price)
+    - [8000](ticket_price) dan [15000](ticket_price)
+    - [12000](ticket_price) dan [150000](ticket_price)
+    - [1000](ticket_price) [5000](ticket_price)
+    - [1000](ticket_price) [5000](ticket_price)
+- synonym: kendaraan umum
+  examples: |
+    - umum
+- synonym: kendaraan pribadi
+  examples: |
+    - pribadi
+- synonym: tidak pakai kendaraan
+  examples: |
+    - tidak naik kendaraan
+    - tidak naik
+    - tidak pakai
+- lookup: schedule_day
+  examples: |
+    - Senin
+    - Selasa
+    - Rabu
+    - Kamis
+    - Jumat
+    - Sabtu
+    - Minggu

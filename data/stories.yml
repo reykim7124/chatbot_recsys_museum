@@ -2,29 +2,72 @@ version: "2.0"
 
 stories:
 
-- story: happy path
+- story: start chatbot with greet
   steps:
   - intent: greet
   - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
 
-- story: sad path 1
+- story: cancel recommendation
   steps:
   - intent: greet
   - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: affirm
-  - action: utter_happy
+  - intent: cancel_recommendation
+  - action: utter_cancel_recommendation
 
-- story: sad path 2
+- story: interactive_story_1
   steps:
   - intent: greet
   - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: deny
-  - action: utter_goodbye
+  - intent: user_agree_recommend
+  - action: utter_user_agree_recommend
+  - action: recommend_form
+  - active_loop: recommend_form
+  - slot_was_set:
+    - requested_slot: use_public_transport
+  - intent: use_public_transport
+    entities:
+    - use_public_transport: kendaraan umum
+  - slot_was_set:
+    - use_public_transport: kendaraan umum
+  - action: utter_ask_schedule_hour
+  - intent: schedule_hour
+    entities:
+    - schedule_hour: pagi
+  - slot_was_set:
+    - schedule_hour: pagi
+  - action: recommend_form
+  - slot_was_set:
+    - requested_slot: schedule_day
+  - slot_was_set:
+    - schedule_day:
+      - senin
+      - selasa
+      - rabu
+      - kamis
+      - jumat
+      - sabtu
+      - minggu
+  - slot_was_set:
+    - schedule_day:
+      - senin
+      - selasa
+      - rabu
+      - kamis
+      - jumat
+      - sabtu
+      - minggu
+  - slot_was_set:
+    - requested_slot: ticket_price
+  - slot_was_set:
+    - ticket_price:
+      - '1000'
+      - '5000'
+  - slot_was_set:
+    - ticket_price:
+      - '1000'
+      - '5000'
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_submit_recommend_form
+  - action: utter_slot_values_recommend_form

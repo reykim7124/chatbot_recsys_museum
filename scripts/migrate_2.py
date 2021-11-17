@@ -191,10 +191,13 @@ def museum_schedule_1_template(museum_schedule_1):
         typeql_insert_query += ', has alt-name "' + \
             museum_schedule_1["schedule_name_1"] + '"'
 
-    typeql_insert_query += ', has open "' + museum_schedule_1["open_1"] + '"'
-    typeql_insert_query += ', has closed "' + \
-        museum_schedule_1["closed_1"] + '";'
-    typeql_insert_query += ' (has-schedule-day: $schedule-day, has-schedule-category: $schedule-category) isa schedule-days;'
+    if museum_schedule_1["open_1"] != "" and museum_schedule_1["closed_1"] != "":
+        schedule_open = museum_schedule_1["open_1"].replace(":", "") 
+        schedule_closed = museum_schedule_1["closed_1"].replace(":", "")
+        typeql_insert_query += ', has open ' + schedule_open + ''
+        typeql_insert_query += ', has closed ' + schedule_closed + ''
+
+    typeql_insert_query += '; (has-schedule-day: $schedule-day, has-schedule-category: $schedule-category) isa schedule-days;'
     return typeql_insert_query
 
 
@@ -210,10 +213,13 @@ def museum_schedule_2_template(museum_schedule_2):
         typeql_insert_query += ', has alt-name "' + \
             museum_schedule_2["schedule_name_2"] + '"'
 
-    typeql_insert_query += ', has open "' + museum_schedule_2["open_2"] + '"'
-    typeql_insert_query += ', has closed "' + \
-        museum_schedule_2["closed_2"] + '";'
-    typeql_insert_query += ' (has-schedule-day: $schedule-day, has-schedule-category: $schedule-category) isa schedule-days;'
+    if museum_schedule_2["open_2"] != "" and museum_schedule_2["closed_2"] != "":
+        schedule_open = museum_schedule_2["open_2"].replace(":", "") 
+        schedule_closed = museum_schedule_2["closed_2"].replace(":", "")
+        typeql_insert_query += ', has open ' + schedule_open + ''
+        typeql_insert_query += ', has closed ' + schedule_closed + ''
+    
+    typeql_insert_query += '; (has-schedule-day: $schedule-day, has-schedule-category: $schedule-category) isa schedule-days;'
     return typeql_insert_query
 
 
@@ -229,10 +235,13 @@ def museum_schedule_3_template(museum_schedule_3):
         typeql_insert_query += ', has alt-name "' + \
             museum_schedule_3["schedule_name_3"] + '"'
 
-    typeql_insert_query += ', has open "' + museum_schedule_3["open_3"] + '"'
-    typeql_insert_query += ', has closed "' + \
-        museum_schedule_3["closed_3"] + '";'
-    typeql_insert_query += ' (has-schedule-day: $schedule-day, has-schedule-category: $schedule-category) isa schedule-days;'
+    if museum_schedule_3["open_3"] != "" and museum_schedule_3["closed_3"] != "":
+        schedule_open = museum_schedule_3["open_3"].replace(":", "") 
+        schedule_closed = museum_schedule_3["closed_3"].replace(":", "")
+        typeql_insert_query += ', has open ' + schedule_open + ''
+        typeql_insert_query += ', has closed ' + schedule_closed + ''
+
+    typeql_insert_query += '; (has-schedule-day: $schedule-day, has-schedule-category: $schedule-category) isa schedule-days;'
     return typeql_insert_query
 
 
