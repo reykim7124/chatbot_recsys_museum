@@ -6,18 +6,17 @@ stories:
   steps:
   - intent: greet
   - action: utter_greet
+  - checkpoint: affirm_start_recommend_form
 
 - story: cancel recommendation
   steps:
-  - intent: greet
-  - action: utter_greet
+  - checkpoint: affirm_start_recommend_form
   - intent: cancel_recommendation
   - action: utter_cancel_recommendation
 
-- story: interactive_story_1
+- story: happy path 1
   steps:
-  - intent: greet
-  - action: utter_greet
+  - checkpoint: affirm_start_recommend_form
   - intent: user_agree_recommend
   - action: utter_user_agree_recommend
   - action: recommend_form
@@ -59,5 +58,7 @@ stories:
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
-  - action: utter_submit_recommend_form
   - action: utter_slot_values_recommend_form
+  - action: utter_submit_recommend_form
+
+
