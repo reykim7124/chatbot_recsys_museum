@@ -88,16 +88,16 @@ def coordinate_template(coordinate):
     return typeql_insert_query
 
 
-def ticket_category_template(ticket):
-    return 'insert $ticket isa ticket-category, has category-name "' + ticket["ticket_category"] + '";'
+# def ticket_category_template(ticket):
+#     return 'insert $ticket isa ticket-category, has category-name "' + ticket["ticket_category"] + '";'
 
 
 def ticket_type_template(ticket):
     return 'insert $ticket isa ticket-type, has ticket-name "' + ticket["ticket_type"] + '";'
 
 
-def schedule_category_template(schedule):
-    return 'insert $schedule isa schedule-category, has category-name "' + schedule["schedule_category"] + '";'
+# def schedule_category_template(schedule):
+#     return 'insert $schedule isa schedule-category, has category-name "' + schedule["schedule_category"] + '";'
 
 
 def schedule_day_template(schedule):
@@ -155,37 +155,43 @@ def museum_transportation_template(museum_transportation):
 def museum_ticket_1_template(museum_ticket_1):
     typeql_insert_query = 'match $museum isa museum, has place-name "' + \
         museum_ticket_1["name"] + '";'
-    typeql_insert_query += '$ticket-category isa ticket-category, has category-name "ticket 1";'
+    # typeql_insert_query += '$ticket-category isa ticket-category, has category-name "ticket 1";'
     typeql_insert_query += ' $ticket-type isa ticket-type, has ticket-name "' + \
         museum_ticket_1["ticket_1"] + '";'
-    typeql_insert_query += ' insert (has-museum: $museum, has-ticket-category: $ticket-category) isa ticket-categories;'
-    typeql_insert_query += ' (has-ticket-type: $ticket-type, has-ticket-category: $ticket-category) isa ticket-types'
+    # typeql_insert_query += ' insert (has-museum: $museum, has-ticket-category: $ticket-category) isa ticket-categories;'
+    # typeql_insert_query += ' (has-ticket-type: $ticket-type, has-ticket-category: $ticket-category) isa ticket-types'
+    typeql_insert_query += 'insert (has-ticket-type: $ticket-type, has-museum: $museum) isa ticket-types'
     typeql_insert_query += ', has price ' + \
-        museum_ticket_1['ticket_price_1'] + ';'
+        museum_ticket_1['ticket_price_1'] + ''
+    typeql_insert_query += ', has category-name "ticket 1";'
     return typeql_insert_query
 
 
 def museum_ticket_2_template(museum_ticket_2):
     typeql_insert_query = 'match $museum isa museum, has place-name "' + \
         museum_ticket_2["name"] + '";'
-    typeql_insert_query += '$ticket-category isa ticket-category, has category-name "ticket 2";'
+    # typeql_insert_query += '$ticket-category isa ticket-category, has category-name "ticket 2";'
     typeql_insert_query += ' $ticket-type isa ticket-type, has ticket-name "' + \
         museum_ticket_2["ticket_2"] + '";'
-    typeql_insert_query += ' insert (has-museum: $museum, has-ticket-category: $ticket-category) isa ticket-categories'
-    typeql_insert_query += ', has alt-name "' + museum_ticket_2["ticket_name_2"] + '";'
-    typeql_insert_query += ' (has-ticket-type: $ticket-type, has-ticket-category: $ticket-category) isa ticket-types'
+    # typeql_insert_query += ' insert (has-museum: $museum, has-ticket-category: $ticket-category) isa ticket-categories'
+    # typeql_insert_query += ', has alt-name "' + museum_ticket_2["ticket_name_2"] + '";'
+    # typeql_insert_query += ' (has-ticket-type: $ticket-type, has-ticket-category: $ticket-category) isa ticket-types'
+    typeql_insert_query += 'insert (has-ticket-type: $ticket-type, has-museum: $museum) isa ticket-types'
     typeql_insert_query += ', has price ' + \
-        museum_ticket_2['ticket_price_2'] + ';'
+        museum_ticket_2['ticket_price_2'] + ''
+    typeql_insert_query += ', has category-name "ticket 2"'
+    typeql_insert_query += ', has alt-name "' + museum_ticket_2["ticket_name_2"] + '";'
     return typeql_insert_query
 
 
 def museum_schedule_1_template(museum_schedule_1):
     typeql_insert_query = 'match $museum isa museum, has place-name "' + \
         museum_schedule_1["name"] + '";'
-    typeql_insert_query += ' $schedule-category isa schedule-category, has category-name "schedule 1";'
+    # typeql_insert_query += ' $schedule-category isa schedule-category, has category-name "schedule 1";'
     typeql_insert_query += ' $schedule-day isa schedule-day, has day "' + \
         museum_schedule_1["schedule_1"] + '";'
-    typeql_insert_query += ' insert (has-museum: $museum, has-schedule-category: $schedule-category) isa schedule-categories'
+    # typeql_insert_query += ' insert (has-museum: $museum, has-schedule-category: $schedule-category) isa schedule-categories'
+    typeql_insert_query += ' insert (has-museum: $museum, has-schedule-day: $schedule-day) isa schedule-days'
 
     if "schedule_name_1" in museum_schedule_1:
         typeql_insert_query += ', has alt-name "' + \
@@ -197,17 +203,19 @@ def museum_schedule_1_template(museum_schedule_1):
         typeql_insert_query += ', has open ' + schedule_open + ''
         typeql_insert_query += ', has closed ' + schedule_closed + ''
 
-    typeql_insert_query += '; (has-schedule-day: $schedule-day, has-schedule-category: $schedule-category) isa schedule-days;'
+    # typeql_insert_query += '; (has-schedule-day: $schedule-day, has-schedule-category: $schedule-category) isa schedule-days;'
+    typeql_insert_query += ', has category-name "schedule 1";'
     return typeql_insert_query
 
 
 def museum_schedule_2_template(museum_schedule_2):
     typeql_insert_query = 'match $museum isa museum, has place-name "' + \
         museum_schedule_2["name"] + '";'
-    typeql_insert_query += ' $schedule-category isa schedule-category, has category-name "schedule 2";'
+    # typeql_insert_query += ' $schedule-category isa schedule-category, has category-name "schedule 2";'
     typeql_insert_query += ' $schedule-day isa schedule-day, has day "' + \
         museum_schedule_2["schedule_2"] + '";'
-    typeql_insert_query += ' insert (has-museum: $museum, has-schedule-category: $schedule-category) isa schedule-categories'
+    # typeql_insert_query += ' insert (has-museum: $museum, has-schedule-category: $schedule-category) isa schedule-categories'
+    typeql_insert_query += ' insert (has-museum: $museum, has-schedule-day: $schedule-day) isa schedule-days'
 
     if "schedule_name_2" in museum_schedule_2:
         typeql_insert_query += ', has alt-name "' + \
@@ -219,17 +227,19 @@ def museum_schedule_2_template(museum_schedule_2):
         typeql_insert_query += ', has open ' + schedule_open + ''
         typeql_insert_query += ', has closed ' + schedule_closed + ''
     
-    typeql_insert_query += '; (has-schedule-day: $schedule-day, has-schedule-category: $schedule-category) isa schedule-days;'
+    # typeql_insert_query += '; (has-schedule-day: $schedule-day, has-schedule-category: $schedule-category) isa schedule-days;'
+    typeql_insert_query += ', has category-name "schedule 2";'
     return typeql_insert_query
 
 
 def museum_schedule_3_template(museum_schedule_3):
     typeql_insert_query = 'match $museum isa museum, has place-name "' + \
         museum_schedule_3["name"] + '";'
-    typeql_insert_query += ' $schedule-category isa schedule-category, has category-name "schedule 3";'
+    # typeql_insert_query += ' $schedule-category isa schedule-category, has category-name "schedule 3";'
     typeql_insert_query += ' $schedule-day isa schedule-day, has day "' + \
         museum_schedule_3["schedule_3"] + '";'
-    typeql_insert_query += ' insert (has-museum: $museum, has-schedule-category: $schedule-category) isa schedule-categories'
+    # typeql_insert_query += ' insert (has-museum: $museum, has-schedule-category: $schedule-category) isa schedule-categories'
+    typeql_insert_query += ' insert (has-museum: $museum, has-schedule-day: $schedule-day) isa schedule-days'
 
     if "schedule_name_3" in museum_schedule_3:
         typeql_insert_query += ', has alt-name "' + \
@@ -241,7 +251,8 @@ def museum_schedule_3_template(museum_schedule_3):
         typeql_insert_query += ', has open ' + schedule_open + ''
         typeql_insert_query += ', has closed ' + schedule_closed + ''
 
-    typeql_insert_query += '; (has-schedule-day: $schedule-day, has-schedule-category: $schedule-category) isa schedule-days;'
+    # typeql_insert_query += '; (has-schedule-day: $schedule-day, has-schedule-category: $schedule-category) isa schedule-days;'
+    typeql_insert_query += ', has category-name "schedule 3";'
     return typeql_insert_query
 
 
@@ -276,18 +287,18 @@ inputs = [
         "data_path": dir_path + "/datasets/split_dataset/transportation_type",
         "template": transportation_type_template
     },
-    {
-        "data_path": dir_path + "/datasets/split_dataset/ticket_category",
-        "template": ticket_category_template
-    },
+    # {
+    #     "data_path": dir_path + "/datasets/split_dataset/ticket_category",
+    #     "template": ticket_category_template
+    # },
     {
         "data_path": dir_path + "/datasets/split_dataset/ticket_type",
         "template": ticket_type_template
     },
-    {
-        "data_path": dir_path + "/datasets/split_dataset/schedule_category",
-        "template": schedule_category_template
-    },
+    # {
+    #     "data_path": dir_path + "/datasets/split_dataset/schedule_category",
+    #     "template": schedule_category_template
+    # },
     {
         "data_path": dir_path + "/datasets/split_dataset/schedule_day",
         "template": schedule_day_template

@@ -46,8 +46,8 @@ museum = raw_dataset.filter([
     "twitter",
     "instagram"], axis=1)
 
-ticket_category = pd.DataFrame(data={"ticket_category": ["ticket 1", "ticket 2"]})
-schedule_category = pd.DataFrame(data={"schedule_category": ["schedule 1", "schedule 2", "schedule 3"]})
+# ticket_category = pd.DataFrame(data={"ticket_category": ["ticket 1", "ticket 2"]})
+# schedule_category = pd.DataFrame(data={"schedule_category": ["schedule 1", "schedule 2", "schedule 3"]})
 
 tickets_1 = raw_dataset.filter(["ticket_1"], axis=1).rename(columns={"ticket_1":"ticket_type"})
 tickets_2 = raw_dataset.filter(["ticket_2"], axis=1).dropna().rename(columns={"ticket_2":"ticket_type"})
@@ -112,9 +112,9 @@ coordinate.to_csv(dir_path + "/datasets/split_dataset/coordinate.csv", index=Fal
 category.to_csv(dir_path + "/datasets/split_dataset/category.csv", index=False)
 transportation.to_csv(dir_path + "/datasets/split_dataset/transportation.csv", index=False)
 transportation_type.to_csv(dir_path + "/datasets/split_dataset/transportation_type.csv", index=False)
-ticket_category.to_csv(dir_path + "/datasets/split_dataset/ticket_category.csv", index=False)
+# ticket_category.to_csv(dir_path + "/datasets/split_dataset/ticket_category.csv", index=False)
 ticket_type.to_csv(dir_path + "/datasets/split_dataset/ticket_type.csv", index=False)
-schedule_category.to_csv(dir_path + "/datasets/split_dataset/schedule_category.csv", index=False)
+# schedule_category.to_csv(dir_path + "/datasets/split_dataset/schedule_category.csv", index=False)
 schedule_day.to_csv(dir_path + "/datasets/split_dataset/schedule_day.csv", index=False)
 
 museum_city.to_csv(dir_path + "/datasets/split_dataset/museum_location.csv", index=False)

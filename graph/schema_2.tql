@@ -32,9 +32,9 @@ museum sub entity,
   plays addresses:has-museum,
   plays transportations:has-museum,
   plays coordinates:has-museum,
-  plays ticket-categories:has-museum,
+  # plays ticket-categories:has-museum,
   plays ticket-types:has-museum,
-  plays schedule-categories:has-museum,
+  # plays schedule-categories:has-museum,
   plays schedule-days:has-museum;
 
 museum-category sub entity,
@@ -101,25 +101,32 @@ transportation-type sub entity,
 ticket-name sub attribute, value string;
 price sub attribute, value double;
 
+# ticket-types sub relation,
+#   owns price,
+#   relates has-ticket-type,
+#   relates has-museum,
+#   relates has-ticket-category;
+
 ticket-types sub relation,
   owns price,
-  relates has-ticket-type,
-  relates has-museum,
-  relates has-ticket-category;
-
-ticket-categories sub relation,
+  owns category-name,
   owns alt-name,
-  relates has-museum,
-  relates has-ticket-category;
+  relates has-ticket-type,
+  relates has-museum;
+
+# ticket-categories sub relation,
+#   owns alt-name,
+#   relates has-museum,
+#   relates has-ticket-category;
 
 ticket-type sub entity,
   owns ticket-name @key,
   plays ticket-types:has-ticket-type;
 
-ticket-category sub entity,
-  owns category-name @key,
-  plays ticket-types:has-ticket-category,
-  plays ticket-categories:has-ticket-category;
+# ticket-category sub entity,
+#   owns category-name @key,
+#   plays ticket-types:has-ticket-category,
+#   plays ticket-categories:has-ticket-category;
 
 ###############
 
@@ -128,22 +135,31 @@ open sub attribute, value double;
 closed sub attribute, value double;
 day sub attribute, value string;
 
-schedule-categories sub relation,
+# schedule-categories sub relation,
+#   owns alt-name,
+#   owns open,
+#   owns closed,
+#   relates has-museum,
+#   relates has-schedule-category;
+
+# schedule-days sub relation,
+#   relates has-museum,
+#   relates has-schedule-category,
+#   relates has-schedule-day;
+
+schedule-days sub relation,
   owns alt-name,
   owns open,
   owns closed,
+  owns category-name,
   relates has-museum,
-  relates has-schedule-category;
-
-schedule-days sub relation,
-  relates has-museum,
-  relates has-schedule-category,
+  # relates has-schedule-category,
   relates has-schedule-day;
 
-schedule-category sub entity,
-  owns category-name @key,
-  plays schedule-categories:has-schedule-category,
-  plays schedule-days:has-schedule-category;
+# schedule-category sub entity,
+#   owns category-name @key,
+#   plays schedule-categories:has-schedule-category,
+#   plays schedule-days:has-schedule-category;
 
 schedule-day sub entity,
   owns day @key,
@@ -168,21 +184,31 @@ rule coordinate-within-city:
     (falls-within: $c, contains: $co) isa location;
   };
 
-rule museum-ticket-types:
-  when {
-    (has-museum: $m, has-ticket-category: $tc) isa ticket-categories;
-    (has-ticket-category: $tc, has-ticket-type: $tt) isa ticket-types;
-  } then {
-    (has-museum: $m, has-ticket-type: $tt) isa ticket-types;
-  };
+# rule museum-ticket-types:
+#   when {
+#     (has-museum: $m, has-ticket-category: $tc) isa ticket-categories;
+#     (has-ticket-category: $tc, has-ticket-type: $tt) isa ticket-types;
+#   } then {
+#     (has-museum: $m, has-ticket-type: $tt) isa ticket-types;
+#   };
 
-rule museum-schedule-days:
-  when {
-    (has-museum: $m, has-schedule-category: $sc) isa schedule-categories;
-    (has-schedule-category: $sc, has-schedule-day: $sd) isa schedule-days;
-  } then {
-    (has-museum: $m, has-schedule-day: $sd) isa schedule-days;
-  };
+# rule museum-ticket-type-prices:
+#   when {
+#     (has-museum: $m, has-ticket-category: $tc) isa ticket-categories;
+#     $ttcs (has-ticket-category: $tc, has-ticket-type: $tt) isa ticket-types;
+#     $ttcs has price $p;
+#     $ttms (has-museum: $m, has-ticket-type: $tt) isa ticket-types;
+#   } then {
+#     $ttms has $p;
+#   };
+
+# rule museum-schedule-days:
+#   when {
+#     (has-museum: $m, has-schedule-category: $sc) isa schedule-categories;
+#     (has-schedule-category: $sc, has-schedule-day: $sd) isa schedule-days;
+#   } then {
+#     (has-museum: $m, has-schedule-day: $sd) isa schedule-days;
+#   };
 
 rule transportation-has-type-pesawat:
   when {
