@@ -27,5 +27,3 @@ rules:
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
-  - action: utter_slot_values_recommend_form
-  - action: utter_submit_recommend_form
