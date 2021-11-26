@@ -1,12 +1,12 @@
 from typing import Any, Text, Dict, List, Optional
 from typedb.client import TypeDB, SessionType, TransactionType, TypeDBOptions
 from scripts import Recommender
+# from Recommender import Recommender
 
 class KnowledgeBase(object):
 
     def get_entities(
         self,
-        entity_type: Text,
         attributes: Optional[List[Dict[Text, Text]]] = None,
         limit: int = 5,
     ) -> List[Dict[Text, Any]]:
@@ -14,13 +14,13 @@ class KnowledgeBase(object):
         raise NotImplementedError("Method is not implemented.")
 
     def get_attribute_of(
-        self, entity_type: Text, key_attribute: Text, entity: Text, attribute: Text
+        self, key_attribute: Text, entity: Text, attribute: Text
     ) -> List[Any]:
 
         raise NotImplementedError("Method is not implemented.")
 
     def validate_entity(
-        self, entity_type, entity, key_attribute, attributes
+        self, entity, key_attribute, attributes
     ) -> Optional[Dict[Text, Any]]:
 
         raise NotImplementedError("Method is not implemented.")
@@ -60,7 +60,7 @@ class GraphDatabase(KnowledgeBase):
                     entities = []
                     # concepts = result_iter.concepts()
                     for i, c in enumerate(result_iter):
-                        entities.append(self._thing_to_dict(i, c))
+                        entities.append(self._thing_to_dict(i + 1, c))
                     return entities
     
 
@@ -98,21 +98,19 @@ class GraphDatabase(KnowledgeBase):
                 $p <= {ticket_price[1]};
             '''
 
-        query += "get $name; offset 0; limit 1;"
+        query += "get $name; limit 5;"
 
         return self._execute_entity_query(query)
 
     
     def get_entities(
         self,
-        entity_type: Text,
         attributes: Optional[List[Dict[Text, Text]]] = None,
-        limit: int = 10,
     ) -> List[Dict[Text, Any]]:
-        if entity_type == "museum":
-            entity = self._get_museum_entity(attributes)
-            recommender = Recommender.Recommender()
-            return recommender.knn(entity[0]["name"])
+        entities = self._get_museum_entity(attributes)
+        recommender = Recommender.Recommender(attributes["use_public_transport"])
+        # recommender = Recommender()
+        return recommender.recommend(entities)
 
 
 # graph = GraphDatabase()

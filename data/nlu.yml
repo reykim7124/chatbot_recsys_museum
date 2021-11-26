@@ -103,18 +103,6 @@ nlu:
     - [tidak pakai]{"entity": "use_public_transport", "value": "tidak pakai kendaraan"}
     - [tidak pakai kendaraan](use_public_transport)
     - [umum]{"entity": "use_public_transport", "value": "kendaraan umum"}
-# - intent: schedule_hour
-#   examples: |
-#     - di [pagi](schedule_hour) hari
-#     - berangkat [siang](schedule_hour)
-#     - aku berangkat [sore](schedule_hour)
-#     - pergi [siang](schedule_hour)
-#     - saya pergi di [pagi](schedule_hour) hari
-#     - [sore](schedule_hour)
-#     - [sore](schedule_hour) hari
-#     - [pagi](schedule_hour)
-#     - [siang](schedule_hour)
-#     - [pagi](schedule_hour)
 - intent: schedule_day
   examples: |
     - [senin](schedule_day)
@@ -162,6 +150,30 @@ nlu:
     - [3048](ticket_price) - [95](ticket_price)
     - [865](ticket_price) [0](ticket_price)
     - [123](ticket_price) [90859](ticket_price)
+- intent: list_more
+  examples: |
+    - yang lain
+    - lihat yang lain
+    - perlihatkan yang lain
+    - perlihat kan yang lain
+    - yg lain
+    - yg laen
+    - yang laen
+    - lihatkan yang lain
+    - lihat kan yang laen
+    - apakah ada lagi
+    - ada lagi
+    - rekomendasikan lagi
+    - rekomen lagi
+    - rekomendasi lagi
+    - rekomendasi kan lagi
+    - rekomend lagi
+    - ada yang lain
+    - apakah ada yang lain
+    - coba lihat yang lain
+    - coba lihat lagi
+    - show more
+    - more
 - synonym: kendaraan umum
   examples: |
     - umum

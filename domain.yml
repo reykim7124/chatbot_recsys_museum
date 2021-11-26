@@ -3,7 +3,6 @@ session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: false
 intents:
-# - schedule_hour
 - use_public_transport
 - schedule_day
 - greet:
@@ -15,36 +14,25 @@ intents:
     use_entities: []
 - cancel_recommendation:
     use_entities: []
+- list_more:
+    use_entities: []
+
 entities:
 - schedule_day
-# - schedule_hour
 - ticket_price
 - use_public_transport
-- entity_type
 - mention
-- attribute
-- museum
+
 slots:
-  entity_type:
-    type: text
-    influence_conversation: false
-    # mappings:
-    # - type: custom
   mention:
     type: text
     influence_conversation: false
-    # mappings:
-    # - type: custom
-  attribute:
-    type: text
+  listed_items:
+    type: list
     influence_conversation: false
-    # mappings:
-    # - type: custom
-  museum:
-    type: text
+  recommendations:
+    type: list
     influence_conversation: false
-    # mappings:
-    # - type: custom
   use_public_transport:
     type: categorical
     influence_conversation: false
@@ -52,19 +40,13 @@ slots:
     - kendaraan umum
     - kendaraan pribadi
     - tidak pakai kendaraan
-  # schedule_hour:
-  #   type: categorical
-  #   influence_conversation: false
-  #   values:
-  #   - pagi
-  #   - siang
-  #   - sore
   schedule_day:
     type: list
     influence_conversation: false
   ticket_price:
     type: list
     influence_conversation: false
+
 responses:
   utter_greet:
   - text: |-
@@ -79,8 +61,6 @@ responses:
   - text: Proses rekomendasi dibatalkan
   utter_ask_use_public_transport:
   - text: Apakah kamu akan menggunakan kendaraan umum, kendaraan pribadi atau tidak pakai kendaraan?
-  # utter_ask_schedule_hour:
-  # - text: Berangkat pagi, siang, sore?
   utter_ask_schedule_day:
   - text: |-
       Di hari apa saja kamu bisa mengunjungi museum? 
@@ -91,25 +71,25 @@ responses:
       Berapa harga tiket termurah dan termahal yang anda inginkan?
       contoh: 1000 sampai 5000, 1000 dan 5000, 1000 - 5000, 1000 5000
   utter_submit_recommend_form:
-  - text: Mohon tunggu sebentar, Aku sedang memproses rekomendasi museum untuk kamu...
-  utter_slot_values_recommend_form:
-  - text: Kamu menjawab {use_public_transport}, {schedule_day}, {ticket_price}
+  - text: Terima kasih dan Mohon tunggu sebentar, Aku sedang memproses rekomendasi museum untuk kamu...
   utter_ask_rephrase:
   - text: "Sorry, I'm not sure I understand. Can you rephrase?"
   - text: "Can you please rephrase? I did not got that."
+
 actions:
 - utter_ask_schedule_day
-# - utter_ask_schedule_hour
 - utter_ask_ticket_price
 - utter_ask_use_public_transport
 - utter_cancel_recommendation
 - utter_goodbye
 - utter_greet
-- utter_slot_values_recommend_form
 - utter_submit_recommend_form
 - utter_user_agree_recommend
 - utter_ask_rephrase
+- action_submit_form
 - action_query_entities
+- action_list_entities
+
 forms:
   recommend_form:
     required_slots:
@@ -117,10 +97,6 @@ forms:
       - type: from_entity
         entity: use_public_transport
         intent: use_public_transport
-      # schedule_hour:
-      # - type: from_entity
-      #   entity: schedule_hour
-      #   intent: schedule_hour
       schedule_day:
       - type: from_entity
         entity: schedule_day

@@ -27,12 +27,6 @@ stories:
     - use_public_transport: kendaraan umum
   - slot_was_set:
     - use_public_transport: kendaraan umum
-  # - slot_was_set:
-  #   - requested_slot: schedule_hour
-  # - slot_was_set:
-  #   - schedule_hour: pagi
-  # - slot_was_set:
-  #   - schedule_hour: pagi
   - slot_was_set:
     - requested_slot: schedule_day
   - slot_was_set:
@@ -58,6 +52,16 @@ stories:
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
-  - action: utter_slot_values_recommend_form
+  # - action: utter_slot_values_recommend_form
   - action: utter_submit_recommend_form
+  - action: action_submit_form
   - action: action_query_entities
+  - action: action_list_entities
+  - checkpoint: form_submitted
+
+- story: if user ask for another list
+  steps:
+  - checkpoint: form_submitted
+  - intent: list_more
+  - action: action_query_entities
+  - action: action_list_entities

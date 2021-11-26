@@ -4,10 +4,11 @@ import os
 import ast
 
 class Recommender():
-    def __init__(self, museums_bin="museums_binary.csv", museums="raw_dataset.xlsx"):
+    def __init__(self, public_transport="kendaraan umum", museums_bin="museums_binary.csv", museums="raw_dataset.xlsx"):
         dir_path = os.getcwd()
         self.museums_bin = pd.read_csv(dir_path + "/datasets/" + museums_bin)
         self.museums = pd.read_excel(dir_path + "/datasets/" + museums)
+        self.public_transport = public_transport
 
     def _cosine(self, point1, point2):
             w = 0
@@ -36,15 +37,16 @@ class Recommender():
         return distance
 
 
-    def knn(self, name):
-        pred_museum = self.museums_bin[self.museums_bin["name"].str.contains(
-            name)].iloc[0].to_frame().T
-
-        def knn(base, K):
+    def knn(self, base, exist, K):
             distances = []
 
             for idx, museum in self.museums_bin.iterrows():
-                if idx != base.index[0]:
+                existed = False
+                for e in exist:
+                    if museum["name"] == e["name"]:
+                        existed = True
+                        
+                if idx != base.index[0] and not existed:
                     dist = self._cosine_distance(base.index[0], idx)
                     distances.append((idx, dist))
 
@@ -53,17 +55,26 @@ class Recommender():
 
             return neighbors
 
-        K = 9
-        neighbors = knn(pred_museum, K)
-        first_museum = self.museums[self.museums["name"].str.contains(name)].iloc[0].to_frame().T
-        first_museum = first_museum.to_dict(orient='records')
-        first_museum[0]["id"] = 0
-        recommend = first_museum
 
-        for i, neighbor in enumerate(neighbors):
-            museum = self.museums.iloc[[neighbor[0]]]
-            museum = museum.to_dict(orient='records')[0]
-            museum["id"] = i + 1
-            recommend.append(museum)
+    def recommend(self, entities):
+        if self.public_transport == "kendaraan pribadi":
+            self.museums.drop(columns=["public_transportation", "distance_to_museum"], axis=1, inplace=True)
+            self.museums_bin.drop(columns=["public_transportation_bin", "distance_bin"], axis=1, inplace=True)
 
-        return recommend
+        pred_museum = self.museums_bin[self.museums_bin["name"].str.contains(
+            entities[0]["name"])].iloc[0].to_frame().T
+
+        K = 10
+        neighbors = self.knn(pred_museum, entities[1:], K)
+        i = len(entities) + 1
+
+        for neighbor in neighbors:
+            museum = self.museums.iloc[neighbor[0]]["name"]
+            museum = {
+                "id": i,
+                "name": museum
+            }
+            entities.append(museum)
+            i += 1
+
+        return entities

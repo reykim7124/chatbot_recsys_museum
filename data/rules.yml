@@ -27,3 +27,9 @@ rules:
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
+
+- rule: always query when user ask for more recommendation
+  steps:
+  - intent: list_more
+  - action: action_query_entities
+  - action: action_list_entities
