@@ -3,28 +3,31 @@ session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: false
 intents:
-- use_public_transport
 - schedule_day
-- greet:
-    use_entities: []
+- ticket_price
+- use_public_transport
 - user_agree_recommend:
     use_entities: []
-- ticket_price
+- greet:
+    use_entities: []
 - goodbye:
     use_entities: []
 - cancel_recommendation:
     use_entities: []
 - list_more:
     use_entities: []
-
+- resolve_mention
 entities:
+- mention
+- museum
 - schedule_day
 - ticket_price
 - use_public_transport
-- mention
-
 slots:
   mention:
+    type: text
+    influence_conversation: false
+  museum:
     type: text
     influence_conversation: false
   listed_items:
@@ -32,7 +35,7 @@ slots:
     influence_conversation: false
   recommendations:
     type: list
-    influence_conversation: false
+    influence_conversation: true
   use_public_transport:
     type: categorical
     influence_conversation: false
@@ -46,13 +49,12 @@ slots:
   ticket_price:
     type: list
     influence_conversation: false
-
 responses:
   utter_greet:
   - text: |-
       Hai! Perkenalkan aku Mersy :D
       Aku adalah chatbot untuk merekomendasikan Museum di Kota Jakarta.
-      Apakah kamu ingin diberikan rekomendasi museum?
+      Apakah kamu ingin diberikan rekomendasi Museum di Jakarta?
   utter_goodbye:
   - text: Bye
   utter_user_agree_recommend:
@@ -73,23 +75,26 @@ responses:
   utter_submit_recommend_form:
   - text: Terima kasih dan Mohon tunggu sebentar, Aku sedang memproses rekomendasi museum untuk kamu...
   utter_ask_rephrase:
-  - text: "Sorry, I'm not sure I understand. Can you rephrase?"
-  - text: "Can you please rephrase? I did not got that."
-
+  - text: Maaf, Apakah bisa diulangi?
+  utter_recommendation_empty:
+  - text: Maaf, aku tidak menemukan museum yang kamu inginkan :(
 actions:
+- action_list_entities
+- action_query_entities
+- action_query_museum
+- action_reset_all_slot
+- action_resolve_mention
+- action_submit_form
+- utter_ask_rephrase
 - utter_ask_schedule_day
 - utter_ask_ticket_price
 - utter_ask_use_public_transport
 - utter_cancel_recommendation
 - utter_goodbye
 - utter_greet
+- utter_recommendation_empty
 - utter_submit_recommend_form
 - utter_user_agree_recommend
-- utter_ask_rephrase
-- action_submit_form
-- action_query_entities
-- action_list_entities
-
 forms:
   recommend_form:
     required_slots:

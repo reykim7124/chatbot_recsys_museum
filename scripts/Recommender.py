@@ -45,6 +45,7 @@ class Recommender():
                 for e in exist:
                     if museum["name"] == e["name"]:
                         existed = True
+                        break
                         
                 if idx != base.index[0] and not existed:
                     dist = self._cosine_distance(base.index[0], idx)

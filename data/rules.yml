@@ -20,7 +20,7 @@ rules:
   - action: recommend_form
   - active_loop: recommend_form
 
-- rule: submit recommend form
+- rule: stop recommend form
   condition:
   - active_loop: recommend_form
   steps:
@@ -28,8 +28,30 @@ rules:
     - requested_slot: null
   - active_loop: null
 
+- rule: submit recommend form
+  condition:
+  - slot_was_set:
+    - recommendations: [{"id": 1, "name": "Museum Bank Indonesia"}, {"id": 2, "name": "Art: 1 New Museum"}]
+  steps:  
+  - action: action_query_entities
+  - action: action_list_entities
+
+- rule: don't submit form
+  condition: 
+  - slot_was_set:
+    - recommendations: []
+  steps:
+  - action: utter_recommendation_empty
+  - action: action_reset_all_slot
+
 - rule: always query when user ask for more recommendation
   steps:
   - intent: list_more
   - action: action_query_entities
   - action: action_list_entities
+
+- rule: always show information when user ask for information
+  steps:
+  - intent: resolve_mention
+  - action: action_resolve_mention
+  - action: action_query_museum

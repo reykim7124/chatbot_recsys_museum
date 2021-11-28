@@ -62,6 +62,12 @@ nlu:
     - minta rekomendasi
     - minta rekomendasi museum
     - minta tolong rekomendasi museum
+    - ulang rekomendasi
+    - ulang proses
+    - ulang proses rekomendasi
+    - tolong ulang rekomendasi
+    - tolong ulang proses rekomendasi
+    - ulangi lagi
     - mau dong mersy
     - tentu
     - mau banget
@@ -87,11 +93,13 @@ nlu:
     - aku gk mau
     - saya mau batal
     - aku mau batal
-    - tidak mau rekomendasi
-    - tidak jadi rekomendasi
     - batal rekomendasi
     - batalkan rekomendasi
     - batal kan rekomendasi
+    - ya batal
+    - ya batalkan
+    - ya batalkan rekomendasi
+    - ya batal rekomendasi
 - intent: use_public_transport
   examples: |
     - [kendaraan pribadi](use_public_transport)
@@ -127,6 +135,7 @@ nlu:
     - [senin](schedule_day) [kamis](schedule_day) [rabu](schedule_day) [jumat](schedule_day), [selasa](schedule_day), [minggu](schedule_day), [sabtu](schedule_day)
     - [senin](schedule_day) [selasa](schedule_day) [rabu](schedule_day) [kamis](schedule_day) [jumat](schedule_day) [sabtu](schedule_day) [minggu](schedule_day)
     - [senin](schedule_day) [minggu](schedule_day) [jumat](schedule_day)
+    - [senin](schedule_day) [selasa](schedule_day)
 - intent: ticket_price
   examples: |
     - dari [5000](ticket_price) sampai [10000](ticket_price)
@@ -150,6 +159,7 @@ nlu:
     - [3048](ticket_price) - [95](ticket_price)
     - [865](ticket_price) [0](ticket_price)
     - [123](ticket_price) [90859](ticket_price)
+    - [50000](ticket_price) [100000](ticket_price)
 - intent: list_more
   examples: |
     - yang lain
@@ -174,17 +184,205 @@ nlu:
     - coba lihat lagi
     - show more
     - more
+- intent: resolve_mention
+  examples: |
+    - [1](mention)
+    - [2](mention)
+    - [3](mention)
+    - [4](mention)
+    - [5](mention)
+    - [terakhir]{"entity": "mention", "value": "LAST"}
 - synonym: kendaraan umum
   examples: |
     - umum
+    - kednraan umum
+    - kendaran umum
+    - kendaran umm
+    - kndraan mum
+    - kendarn umum
+    - kndran umum
+    - knderanan umum
+    - umm
+    - mum
 - synonym: kendaraan pribadi
   examples: |
     - pribadi
+    - prbdadi
+    - pirabdi
+    - pridabi
+    - pribad
+    - pribdi
+    - prbdi
+    - kendaraan prbdadi
+    - kndarana pirabdi
+    - kndaraan pridabi
+    - kendraan pribad
+    - kndran pribdi
+    - kendaran prbdi
 - synonym: tidak pakai kendaraan
   examples: |
     - tidak naik kendaraan
     - tidak naik
     - tidak pakai
+    - tidak nik kendaraan
+    - tdak nak kndarana
+    - idak naik kndaraan
+    - tdk nk kendraan
+    - tidak naek kndran
+    - tidk pake kendaran
+    - tidak pkaikednraan
+    - tdk pakai kendaran
+    - tidk pki kendaran
+    - tidk paki kndraan
+    - tdak pkai kendarn
+- synonym: LAST
+  examples: |
+    - terakhir
+- synonym: '1'
+  examples: |
+    - satu
+    - stu
+    - sat u
+    - sa tu
+    - sat
+    - pertama
+    - per tama
+    - prtama
+    - per tma
+    - prtma
+    - prtam
+    - per tam
+    - kesatu
+    - ke satu
+    - kstu
+    - kestu
+    - k satu
+    - ke stu
+    - ke sat
+    - kesat
+    - atas
+    - yang atas
+    - yg ats
+    - yan tas
+    - yanga ats
+    - yng tas
+    - yg atas
+    - yangat as
+    - teratas
+    - ter atas
+    - paling atas
+    - pling ats
+    - plng tas
+    - pal ingatas
+    - palign atas
+    - pl ing atas
+    - pa lnigtas
+- synonym: '2'
+  examples: |
+    - dua
+    - kedua
+    - ke dua
+    - da
+    - du
+    - du a
+    - d ua
+    - keda
+    - kdu
+    - kedu
+    - kda
+    - k dua
+    - ke du
+    - ke da
+    - kdua
+    - kdu a
+    - kedu a
+    - ke du a
+    - kd ua
+- synonym: '3'
+  examples: |
+    - tiga
+    - ketiga
+    - ke tiga
+    - tga
+    - tig
+    - ti ga
+    - ketga
+    - ktiga
+    - ktga
+    - ktig
+    - ke tga
+    - ke tig
+    - k etiga
+    - ket iga
+    - keti ga
+    - ket ga
+    - kt ga
+    - kti ga
+- synonym: '4'
+  examples: |
+    - empat
+    - keempat
+    - ke empat
+    - empt
+    - mpat
+    - mpt
+    - epat
+    - empta
+    - ke empta
+    - kempat
+    - ke empt
+    - kemp at
+    - kee mpat
+    - kem pat
+    - keem pat
+    - ke em pt
+    - kmp at
+- synonym: '5'
+  examples: |
+    - lima
+    - kelima
+    - ke lima
+    - lma
+    - lim
+    - laim
+    - lmai
+    - li ma
+    - lim a
+    - lm a
+    - keilma
+    - kelma
+    - ke lma
+    - klma
+    - klima
+    - kelim a
+    - kli ma
+    - klm a
+- synonym: terakhir
+  examples: |
+    - terbawah
+    - ter bawah
+    - bawah
+    - bwh
+    - bawh
+    - bwah
+    - bw ah
+    - baw ah
+    - ba wah
+    - b wh
+    - ba wh
+    - paling bawah
+    - trbwah
+    - trbawah
+    - trbawh
+    - ter bwh
+    - terbwah
+    - ter bwah
+    - pling bw ah
+    - plng baw ah
+    - pal ing ba wah
+    - palign bwh
+    - pl ing bawh
+    - pa lnig bwah
 - lookup: schedule_day
   examples: |
     - Senin
