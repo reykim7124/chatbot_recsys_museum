@@ -163,6 +163,7 @@ def museum_ticket_1_template(museum_ticket_1):
     typeql_insert_query += 'insert (has-ticket-type: $ticket-type, has-museum: $museum) isa ticket-types'
     typeql_insert_query += ', has price ' + \
         museum_ticket_1['ticket_price_1'] + ''
+    typeql_insert_query += ', has alt-name ""' + ''
     typeql_insert_query += ', has category-name "ticket 1";'
     return typeql_insert_query
 
