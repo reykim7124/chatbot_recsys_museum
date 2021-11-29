@@ -70,6 +70,7 @@ class GraphDatabase(KnowledgeBase):
                     entities = []
                     for i, c in enumerate(result_iter):
                         entities.append(self._thing_to_dict(i + 1, c))
+                    
                     return entities
     
 
@@ -116,7 +117,8 @@ class GraphDatabase(KnowledgeBase):
         self,
         object_identifier: Text
     ) -> Optional[Dict[Text, Any]]:
-        query = f'''
+        if object_identifier == "Museum BNI 1946":
+            query = f'''
             match $m isa museum;
             $m has place-name $name;
             $name "{object_identifier}";
@@ -133,12 +135,6 @@ class GraphDatabase(KnowledgeBase):
             $t isa transportation, has place-name $transportation;
             (has-transportation: $t, has-museum: $m) isa transportations,
             has distance $distance;
-            $sd isa schedule-day, has day $day;
-            (has-schedule-day: $sd, has-museum: $m) isa schedule-days,
-            has open $open,
-            has closed $closed,
-            has category-name $schedule-category,
-            has alt-name $schedule-name;
             $co isa coordinate, has latitude $latitude, has longitude $longitude;
             (has-museum: $m, has-coordinate: $co) isa coordinates;
             $c isa city, has place-name $city;
@@ -150,10 +146,48 @@ class GraphDatabase(KnowledgeBase):
             has alt-name $ticket-name;
             get $name, $phone-number, $website, $facebook, $twitter,
             $instagram, $email, $category, $latitude, $longitude, $city,
-            $address, $transportation, $distance,$day, $open, $closed,
-            $schedule-category, $schedule-name, $ticket, $price, $ticket-category,
+            $address, $transportation, $distance, $ticket, $price, $ticket-category,
             $ticket-name;
         '''
+        else:
+            query = f'''
+                match $m isa museum;
+                $m has place-name $name;
+                $name "{object_identifier}";
+                $m has phone-number $phone-number;
+                $m has website $website;
+                $m has facebook $facebook;
+                $m has twitter $twitter;
+                $m has instagram $instagram;
+                $m has email $email;
+                $mc isa museum-category, has category-name $category;
+                (has-museum: $m, has-category: $mc) isa museum-categories;
+                $a isa address, has address-text $address;
+                $ad (has-museum: $m, has-address: $a) isa addresses;
+                $t isa transportation, has place-name $transportation;
+                (has-transportation: $t, has-museum: $m) isa transportations,
+                has distance $distance;
+                $sd isa schedule-day, has day $day;
+                (has-schedule-day: $sd, has-museum: $m) isa schedule-days,
+                has open $open,
+                has closed $closed,
+                has category-name $schedule-category,
+                has alt-name $schedule-name;
+                $co isa coordinate, has latitude $latitude, has longitude $longitude;
+                (has-museum: $m, has-coordinate: $co) isa coordinates;
+                $c isa city, has place-name $city;
+                (contains: $m, falls-within: $c) isa location;
+                $tt isa ticket-type, has ticket-name $ticket;
+                (has-museum: $m, has-ticket-type: $tt) isa ticket-types,
+                has price $price,
+                has category-name $ticket-category,
+                has alt-name $ticket-name;
+                get $name, $phone-number, $website, $facebook, $twitter,
+                $instagram, $email, $category, $latitude, $longitude, $city,
+                $address, $transportation, $distance, $day, $open, $closed,
+                $schedule-category, $schedule-name, $ticket, $price, $ticket-category,
+                $ticket-name;
+            '''
         return self._execute_entity_query(query)
 
     
@@ -197,14 +231,15 @@ class GraphDatabase(KnowledgeBase):
             }
         }
 
-        entity["schedule"] = {
-            entity.pop("schedule-category"): {
-                "alt-name": entity.pop("schedule-name"),
-                "schedule-day": [entity.pop("day")],
-                "open": entity.pop("open"),
-                "closed": entity.pop("closed")
-            },
-        }
+        if entity["name"] != "Museum BNI 1946":
+            entity["schedule"] = {
+                entity.pop("schedule-category"): {
+                    "alt-name": entity.pop("schedule-name"),
+                    "schedule-day": [entity.pop("day")],
+                    "open": entity.pop("open"),
+                    "closed": entity.pop("closed")
+                },
+            }
 
         for e in list_of_objects[1:]:
             transport = {
@@ -229,16 +264,17 @@ class GraphDatabase(KnowledgeBase):
             if ticket not in entity["ticket"][e["ticket-category"]]["ticket-type"]:
                 entity["ticket"][e["ticket-category"]]["ticket-type"].append(ticket)
 
-            if e["schedule-category"] not in entity["schedule"]:
-                entity["schedule"][e["schedule-category"]] = {
-                    "alt-name": e["schedule-name"],
-                    "open": e["open"],
-                    "closed": e["closed"],
-                    "schedule-day": []
-                }
+            if entity["name"] != "Museum BNI 1946":
+                if e["schedule-category"] not in entity["schedule"]:
+                    entity["schedule"][e["schedule-category"]] = {
+                        "alt-name": e["schedule-name"],
+                        "open": e["open"],
+                        "closed": e["closed"],
+                        "schedule-day": []
+                    }
 
-            if e["day"] not in entity["schedule"][e["schedule-category"]]["schedule-day"]:
-                entity["schedule"][e["schedule-category"]]["schedule-day"].append(e["day"])
+                if e["day"] not in entity["schedule"][e["schedule-category"]]["schedule-day"]:
+                    entity["schedule"][e["schedule-category"]]["schedule-day"].append(e["day"])
             
         return entity
 
