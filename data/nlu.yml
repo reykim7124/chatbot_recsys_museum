@@ -113,29 +113,29 @@ nlu:
     - [umum]{"entity": "use_public_transport", "value": "kendaraan umum"}
 - intent: schedule_day
   examples: |
-    - [senin](schedule_day)
-    - [selasa](schedule_day)
-    - [rabu](schedule_day)
-    - [kamis](schedule_day)
-    - [jumat](schedule_day)
-    - [sabtu](schedule_day)
-    - [minggu](schedule_day)
-    - saya bisa berangkat di hari [senin](schedule_day), [selasa](schedule_day), [rabu](schedule_day)
-    - [kamis](schedule_day), [jumat](schedule_day), [sabtu](schedule_day)
-    - [minggu](schedule_day) [selasa](schedule_day) [senin](schedule_day)
-    - di hari [kamis](schedule_day) [minggu](schedule_day) [jumat](schedule_day)
-    - hari [rabu](schedule_day), [jumat](schedule_day), [senin](schedule_day)
-    - berangkat [senin](schedule_day), [minggu](schedule_day), [sabtu](schedule_day)
-    - di hari [senin](schedule_day) [rabu](schedule_day) [minggu](schedule_day)
-    - [senin](schedule_day), [selasa](schedule_day), [rabu](schedule_day), [kamis](schedule_day), [jumat](schedule_day)
-    - [minggu](schedule_day) [jumat](schedule_day) [selasa](schedule_day) [kamis](schedule_day) [rabu](schedule_day) [senin](schedule_day) [sabtu](schedule_day)
-    - [senin](schedule_day) [rabu](schedule_day) [sabtu](schedule_day)
-    - [selasa](schedule_day) [senin](schedule_day) [jumat](schedule_day) [sabtu](schedule_day) [rabu](schedule_day) [kamis](schedule_day) [minggu](schedule_day)
-    - [jumat](schedule_day) [sabtu](schedule_day) [minggu](schedule_day)
-    - [senin](schedule_day) [kamis](schedule_day) [rabu](schedule_day) [jumat](schedule_day), [selasa](schedule_day), [minggu](schedule_day), [sabtu](schedule_day)
-    - [senin](schedule_day) [selasa](schedule_day) [rabu](schedule_day) [kamis](schedule_day) [jumat](schedule_day) [sabtu](schedule_day) [minggu](schedule_day)
-    - [senin](schedule_day) [minggu](schedule_day) [jumat](schedule_day)
-    - [senin](schedule_day) [selasa](schedule_day)
+    - [Senin]{"entity": "schedule_day", "value": "Senin"}
+    - [Selasa]{"entity": "schedule_day", "value": "Selasa"}
+    - [Rabu]{"entity": "schedule_day", "value": "Rabu"}
+    - [Kamis]{"entity": "schedule_day", "value": "Kamis"}
+    - [Jumat]{"entity": "schedule_day", "value": "Jumat"}
+    - [Sabtu]{"entity": "schedule_day", "value": "Sabtu"}
+    - [Minggu]{"entity": "schedule_day", "value": "Minggu"}
+    - saya bisa berangkat di hari [Senin]{"entity": "schedule_day", "value": "Senin"}, [Selasa]{"entity": "schedule_day", "value": "Selasa"}, [Rabu]{"entity": "schedule_day", "value": "Rabu"}
+    - [Kamis]{"entity": "schedule_day", "value": "Kamis"}, [Jumat]{"entity": "schedule_day", "value": "Jumat"}, [Sabtu]{"entity": "schedule_day", "value": "Sabtu"}
+    - [Minggu]{"entity": "schedule_day", "value": "Minggu"} [Selasa]{"entity": "schedule_day", "value": "Selasa"} [Senin]{"entity": "schedule_day", "value": "Senin"}
+    - di hari [Kamis]{"entity": "schedule_day", "value": "Kamis"} [Minggu]{"entity": "schedule_day", "value": "Minggu"} [Sabtu]{"entity": "schedule_day", "value": "Sabtu"}
+    - hari [Rabu]{"entity": "schedule_day", "value": "Rabu"}, [jumat]{"entity": "schedule_day", "value": "Jumat"}, [senin]{"entity": "schedule_day", "value": "Senin"}
+    - berangkat [senin]{"entity": "schedule_day", "value": "Senin"}, [minggu]{"entity": "schedule_day", "value": "Minggu"}, [sabtu]{"entity": "schedule_day", "value": "Sabtu"}
+    - di hari [senin]{"entity": "schedule_day", "value": "Senin"} [rabu]{"entity": "schedule_day", "value": "Rabu"} [minggu]{"entity": "schedule_day", "value": "Minggu"}
+    - [Senin]{"entity": "schedule_day", "value": "Senin"}, [selasa]{"entity": "schedule_day", "value": "Selasa"}, [rabu]{"entity": "schedule_day", "value": "Rabu"}, [Kamis]{"entity": "schedule_day", "value": "Kamis"}, [Jumat]{"entity": "schedule_day", "value": "Jumat"}
+    - [Minggu]{"entity": "schedule_day", "value": "Minggu"} [jumat]{"entity": "schedule_day", "value": "Jumat"} [selasa]{"entity": "schedule_day", "value": "Selasa"} [Kamis]{"entity": "schedule_day", "value": "Kamis"} [rabu]{"entity": "schedule_day", "value": "Rabu"} [senin]{"entity": "schedule_day", "value": "Senin"} [Sabtu]{"entity": "schedule_day", "value": "Sabtu"}
+    - [senin]{"entity": "schedule_day", "value": "Senin"} [rabu]{"entity": "schedule_day", "value": "Rabu"} [sabtu]{"entity": "schedule_day", "value": "Sabtu"}
+    - [selasa]{"entity": "schedule_day", "value": "Selasa"} [senin]{"entity": "schedule_day", "value": "Senin"} [jumat]{"entity": "schedule_day", "value": "Jumat"} [sabtu]{"entity": "schedule_day", "value": "Sabtu"} [rabu]{"entity": "schedule_day", "value": "Rabu"} [kamis]{"entity": "schedule_day", "value": "Kamis"} [minggu]{"entity": "schedule_day", "value": "Minggu"}
+    - [jumat]{"entity": "schedule_day", "value": "Jumat"} [sabtu]{"entity": "schedule_day", "value": "Sabtu"} [minggu]{"entity": "schedule_day", "value": "Minggu"}
+    - [senin]{"entity": "schedule_day", "value": "Senin"} [kamis]{"entity": "schedule_day", "value": "Kamis"} [rabu]{"entity": "schedule_day", "value": "Rabu"} [jumat]{"entity": "schedule_day", "value": "Jumat"}, [selasa]{"entity": "schedule_day", "value": "Selasa"}, [minggu]{"entity": "schedule_day", "value": "Minggu"}, [sabtu]{"entity": "schedule_day", "value": "Sabtu"}
+    - [senin]{"entity": "schedule_day", "value": "Senin"} [selasa]{"entity": "schedule_day", "value": "Selasa"} [rabu]{"entity": "schedule_day", "value": "Rabu"} [kamis]{"entity": "schedule_day", "value": "Kamis"} [jumat]{"entity": "schedule_day", "value": "Jumat"} [sabtu]{"entity": "schedule_day", "value": "Sabtu"} [minggu]{"entity": "schedule_day", "value": "Minggu"}
+    - [senin]{"entity": "schedule_day", "value": "Senin"} [minggu]{"entity": "schedule_day", "value": "Minggu"} [jumat]{"entity": "schedule_day", "value": "Jumat"}
+    - [senin]{"entity": "schedule_day", "value": "Senin"} [selasa]{"entity": "schedule_day", "value": "Selasa"}
 - intent: ticket_price
   examples: |
     - dari [5000](ticket_price) sampai [10000](ticket_price)
@@ -186,12 +186,30 @@ nlu:
     - more
 - intent: resolve_mention
   examples: |
-    - [1](mention)
-    - [2](mention)
-    - [3](mention)
-    - [4](mention)
-    - [5](mention)
-    - [terakhir]{"entity": "mention", "value": "LAST"}
+    - [1]{"entity": "mention", "value": "1"}
+    - [2]{"entity": "mention", "value": "2"}
+    - [3]{"entity": "mention", "value": "3"}
+    - [4]{"entity": "mention", "value": "4"}
+    - [5]{"entity": "mention", "value": "5"}
+    - ke [1]{"entity": "mention", "value": "1"}
+    - ke [2]{"entity": "mention", "value": "2"}
+    - ke [3]{"entity": "mention", "value": "3"}
+    - ke [4]{"entity": "mention", "value": "4"}
+    - ke [5]{"entity": "mention", "value": "5"}
+    - [satu]{"entity": "mention", "value": "1"}
+    - [dua]{"entity": "mention", "value": "2"}
+    - [tiga]{"entity": "mention", "value": "3"}
+    - [empat]{"entity": "mention", "value": "4"}
+    - [lima]{"entity": "mention", "value": "5"}
+    - [pertama]{"entity": "mention", "value": "1"}
+    - [kedua]{"entity": "mention", "value": "2"}
+    - [ketiga]{"entity": "mention", "value": "3"}
+    - [keempat]{"entity": "mention", "value": "4"}
+    - [kelima]{"entity": "mention", "value": "5"}
+    - [terakhir]{"entity": "mention", "value": "terakhir"}
+    - [terbawah]{"entity": "mention", "value": "terakhir"}
+    - [paling bawah]{"entity": "mention", "value": "terakhir"}
+    - yang [terakhir]{"entity": "mention", "value": "terakhir"}
 - synonym: kendaraan umum
   examples: |
     - umum
@@ -235,9 +253,147 @@ nlu:
     - tidk pki kendaran
     - tidk paki kndraan
     - tdak pkai kendarn
-- synonym: LAST
+- synonym: Senin
   examples: |
-    - terakhir
+    - senin
+    - senen
+    - snn
+    - senn
+    - snin
+    - snen
+    - se nin
+    - sn in
+    - sn en
+    - sen in
+    - sen en
+    - seni n
+    - sene n
+    - snein
+    - s enin
+    - s nin
+    - s enn
+- synonym: Selasa
+  examples: |
+    - selasa
+    - lasa
+    - slasa
+    - sls
+    - slsa
+    - selsa
+    - sl asa
+    - se lasa
+    - sl sa
+    - sel asa
+    - sel sa
+    - sela sa
+    - sla sa
+    - s lasa
+    - s elasa
+    - s ls
+- synonym: Rabu
+  examples: |
+    - rabu
+    - rebo
+    - rbu
+    - rbo
+    - rab
+    - reb
+    - ra bu
+    - re bo
+    - r bu
+    - r bo
+    - rab
+    - reb
+    - rab u
+    - reb o
+    - r bu
+    - r bo
+    - r ab
+    - r eb
+- synonym: Kamis
+  examples: |
+    - kamis
+    - kemis
+    - kmis
+    - kams
+    - kems
+    - kam is
+    - kem is
+    - km is
+    - kms
+    - kemi s
+    - kami s
+    - k mis
+    - kam is
+    - kem is
+    - kam s
+    - kem s
+    - k amis
+    - k emis
+    - kmi s
+- synonym: Jumat
+  examples: |
+    - jumat
+    - jum'at
+    - jmat
+    - jm'at
+    - jmt
+    - jm't
+    - jum at
+    - jm at
+    - juma t
+    - jum'a t
+    - jm'a t
+    - jum t
+    - jum't
+    - jum' t
+    - jm t
+    - j umat
+    - j um'at
+    - j mat
+    - j m'at
+    - j mt
+- synonym: Sabtu
+  examples: |
+    - sabtu
+    - sbtu
+    - sbt
+    - sabt
+    - sa btu
+    - s btu
+    - sab tu
+    - sabt u
+    - sbt u
+    - s abtu
+    - sb tu
+    - sab t
+    - sab u
+    - s btu
+    - s abt
+- synonym: Minggu
+  examples: |
+    - mnggu
+    - mingg
+    - mingu
+    - mngu
+    - ming gu
+    - ming u
+    - mng gu
+    - mng u
+    - min ggu
+    - ming u
+    - mn gu
+    - min gu
+    - mn ggu
+    - min u
+    - minu
+    - mi nggu
+    - mi ngu
+    - m inggu
+    - m ingu
+    - m ingg
+    - m nggu
+    - m ngu
 - synonym: '1'
   examples: |
     - satu
