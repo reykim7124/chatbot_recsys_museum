@@ -1,7 +1,7 @@
 from typing import Any, Text, Dict, List, Optional
 from typedb.client import TypeDB, SessionType, TransactionType, TypeDBOptions
-from scripts import Recommender
-# from Recommender import Recommender
+# from scripts import Recommender
+from Recommender import Recommender
 
 class KnowledgeBase(object):
 
@@ -198,8 +198,8 @@ class GraphDatabase(KnowledgeBase):
         entities = self._get_museum_entities(attributes)
 
         if len(entities) > 0:
-            recommender = Recommender.Recommender(attributes["use_public_transport"])
-            # recommender = Recommender()
+            # recommender = Recommender.Recommender(attributes["use_public_transport"])
+            recommender = Recommender()
             return recommender.recommend(entities)
         else:
             return None
