@@ -44,7 +44,8 @@ museum = raw_dataset.filter([
     "website",
     "facebook",
     "twitter",
-    "instagram"], axis=1)
+    "instagram",
+    "description"], axis=1)
 
 # ticket_category = pd.DataFrame(data={"ticket_category": ["ticket 1", "ticket 2"]})
 # schedule_category = pd.DataFrame(data={"schedule_category": ["schedule 1", "schedule 2", "schedule 3"]})
@@ -64,6 +65,7 @@ schedule_day = pd.DataFrame(data=schedule_day, columns=["schedule"])
 
 ticket_type = list(remove_duplicates(ticket_type["ticket_type"]))
 ticket_type = pd.DataFrame(data=ticket_type, columns=["ticket_type"])
+ticket_price_range = pd.DataFrame(data={"ticket_price_range": ["paling murah", "murah", "mahal", "paling mahal"]})
 
 transportation = list(remove_duplicates(raw_dataset["public_transportation"]))
 transportation = pd.DataFrame(data=transportation, columns=["transportation"])
@@ -114,6 +116,7 @@ transportation.to_csv(dir_path + "/datasets/split_dataset/transportation.csv", i
 transportation_type.to_csv(dir_path + "/datasets/split_dataset/transportation_type.csv", index=False)
 # ticket_category.to_csv(dir_path + "/datasets/split_dataset/ticket_category.csv", index=False)
 ticket_type.to_csv(dir_path + "/datasets/split_dataset/ticket_type.csv", index=False)
+ticket_price_range.to_csv(dir_path + "/datasets/split_dataset/ticket_price_range.csv", index=False)
 # schedule_category.to_csv(dir_path + "/datasets/split_dataset/schedule_category.csv", index=False)
 schedule_day.to_csv(dir_path + "/datasets/split_dataset/schedule_day.csv", index=False)
 

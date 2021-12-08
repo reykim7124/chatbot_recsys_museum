@@ -38,6 +38,7 @@ def load_data_into_typedb(input, session):
 def museum_template(museum):
     typeql_insert_query = "insert $museum isa museum"
     typeql_insert_query += ', has place-name "' + museum["name"] + '"'
+    typeql_insert_query += ', has description "' + museum["description"] + '"'
     typeql_insert_query += ', has phone-number "' + \
         museum["phone_number"] + '"'
 
@@ -94,6 +95,9 @@ def coordinate_template(coordinate):
 
 def ticket_type_template(ticket):
     return 'insert $ticket isa ticket-type, has ticket-name "' + ticket["ticket_type"] + '";'
+
+def ticket_price_range_template(ticket):
+    return 'insert $ticket-price-range isa ticket-price-range, has ticket-price-range-name "' + ticket["ticket_price_range"] + '";'
 
 
 # def schedule_category_template(schedule):
@@ -295,6 +299,10 @@ inputs = [
     {
         "data_path": dir_path + "/datasets/split_dataset/ticket_type",
         "template": ticket_type_template
+    },
+    {
+        "data_path": dir_path + "/datasets/split_dataset/ticket_price_range",
+        "template": ticket_price_range_template
     },
     # {
     #     "data_path": dir_path + "/datasets/split_dataset/schedule_category",
