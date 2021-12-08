@@ -12,6 +12,11 @@ website sub attribute, value string;
 facebook sub attribute, value string;
 twitter sub attribute, value string;
 instagram sub attribute, value string;
+description sub attribute, value string;
+
+nearby sub relation,
+  relates near-to,
+  relates near-by;
 
 museum-categories sub relation,
   relates has-museum,
@@ -24,7 +29,8 @@ museum sub entity,
   owns email,
   owns facebook,
   owns twitter,
-  owns instagram;
+  owns instagram,
+  owns description;
 
 museum sub entity,
   plays location:contains,
@@ -35,7 +41,10 @@ museum sub entity,
   # plays ticket-categories:has-museum,
   plays ticket-types:has-museum,
   # plays schedule-categories:has-museum,
-  plays schedule-days:has-museum;
+  plays schedule-days:has-museum,
+  plays ticket-price-ranges:has-museum,
+  plays nearby:near-by,
+  plays nearby:near-to;
 
 museum-category sub entity,
   owns category-name @key,
@@ -99,6 +108,7 @@ transportation-type sub entity,
 
 ## tickets ##
 ticket-name sub attribute, value string;
+ticket-price-range-name sub attribute, value string;
 price sub attribute, value double;
 
 # ticket-types sub relation,
@@ -114,10 +124,18 @@ ticket-types sub relation,
   relates has-ticket-type,
   relates has-museum;
 
+ticket-price-ranges sub relation,
+  relates has-museum,
+  relates has-ticket-price-range;
+
 # ticket-categories sub relation,
 #   owns alt-name,
 #   relates has-museum,
 #   relates has-ticket-category;
+
+ticket-price-range sub entity,
+  owns ticket-price-range-name,
+  plays ticket-price-ranges:has-ticket-price-range;
 
 ticket-type sub entity,
   owns ticket-name @key,
@@ -184,31 +202,67 @@ rule coordinate-within-city:
     (falls-within: $c, contains: $co) isa location;
   };
 
-# rule museum-ticket-types:
-#   when {
-#     (has-museum: $m, has-ticket-category: $tc) isa ticket-categories;
-#     (has-ticket-category: $tc, has-ticket-type: $tt) isa ticket-types;
-#   } then {
-#     (has-museum: $m, has-ticket-type: $tt) isa ticket-types;
-#   };
+rule museum-close-to-each-other:
+  when {
+    $m1 isa museum;
+    $m2 isa museum;
+    $t isa transportation;
+    (has-museum: $m1, has-transportation: $t) isa transportations, has distance < 10;
+    (has-museum: $m2, has-transportation: $t) isa transportations, has distance < 10;
+    not { $m1 is $m2; };
+  } then {
+    (near-by: $m1, near-to: $m2) isa nearby;
+  };
 
-# rule museum-ticket-type-prices:
-#   when {
-#     (has-museum: $m, has-ticket-category: $tc) isa ticket-categories;
-#     $ttcs (has-ticket-category: $tc, has-ticket-type: $tt) isa ticket-types;
-#     $ttcs has price $p;
-#     $ttms (has-museum: $m, has-ticket-type: $tt) isa ticket-types;
-#   } then {
-#     $ttms has $p;
-#   };
+rule ticket-price-is-paling-murah:
+  when {
+    $tpr isa ticket-price-range, has ticket-price-range-name "paling murah";
+    $m isa museum;
+    $tt isa ticket-type;
+    $tts (has-museum: $m, has-ticket-type: $tt) isa ticket-types;
+    $tts has price $p;
+    $p < 4000;
+  } then {
+    (has-museum: $m, has-ticket-price-range: $tpr) isa ticket-price-ranges;
+  };
 
-# rule museum-schedule-days:
-#   when {
-#     (has-museum: $m, has-schedule-category: $sc) isa schedule-categories;
-#     (has-schedule-category: $sc, has-schedule-day: $sd) isa schedule-days;
-#   } then {
-#     (has-museum: $m, has-schedule-day: $sd) isa schedule-days;
-#   };
+rule ticket-price-is-murah:
+  when {
+    $tpr isa ticket-price-range, has ticket-price-range-name "murah";
+    $m isa museum;
+    $tt isa ticket-type;
+    $tts (has-museum: $m, has-ticket-type: $tt) isa ticket-types;
+    $tts has price $p;
+    $p >= 4000;
+    $p < 15000;
+  } then {
+    (has-museum: $m, has-ticket-price-range: $tpr) isa ticket-price-ranges;
+  };
+
+rule ticket-price-is-mahal:
+  when {
+    $tpr isa ticket-price-range, has ticket-price-range-name "mahal";
+    $m isa museum;
+    $tt isa ticket-type;
+    $tts (has-museum: $m, has-ticket-type: $tt) isa ticket-types;
+    $tts has price $p;
+    $p >= 15000;
+    $p < 50000;
+  } then {
+    (has-museum: $m, has-ticket-price-range: $tpr) isa ticket-price-ranges;
+  };
+
+rule ticket-price-is-paling-mahal:
+  when {
+    $tpr isa ticket-price-range, has ticket-price-range-name "paling mahal";
+    $m isa museum;
+    $tt isa ticket-type;
+    $tts (has-museum: $m, has-ticket-type: $tt) isa ticket-types;
+    $tts has price $p;
+    $p >= 50000;
+  } then {
+    (has-museum: $m, has-ticket-price-range: $tpr) isa ticket-price-ranges;
+  };
 
 rule transportation-has-type-pesawat:
   when {
