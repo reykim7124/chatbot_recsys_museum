@@ -1,7 +1,7 @@
 from typing import Any, Text, Dict, List, Optional
 from typedb.client import TypeDB, SessionType, TransactionType, TypeDBOptions
-# from scripts import Recommender
-from Recommender import Recommender
+from scripts import Recommender
+# from Recommender import Recommender
 
 class KnowledgeBase(object):
 
@@ -53,7 +53,10 @@ class GraphDatabase(KnowledgeBase):
         """
         entity = {"id": idx}
         for each in thing.map():
-            entity[each] = thing.get(each).get_value()
+            if each == "name2":
+                entity["name"] = thing.get(each).get_value()
+            else:
+                entity[each] = thing.get(each).get_value()
         return entity
 
 
@@ -83,7 +86,8 @@ class GraphDatabase(KnowledgeBase):
         query = "match $m isa museum, has place-name $name;"
         
         if (use_public_transport == "kendaraan umum" or use_public_transport == "tidak pakai kendaraan"):
-            query += "$t isa transportation; (has-transportation: $t, has-museum: $m) isa transportations, has distance <= 10;"
+            query += "(near-to: $m, near-by: $m2) isa nearby;"
+            query += "$m2 isa museum, has place-name $name2;"
 
         for idx, sd in enumerate(schedule_day):
             query += f'''
@@ -91,24 +95,33 @@ class GraphDatabase(KnowledgeBase):
                 (has-museum: $m, has-schedule-day: $sd{str(idx)}) isa schedule-days;
             '''
 
-        query += (
-            '$tt isa ticket-type;'
-            '$tts (has-museum: $m, has-ticket-type: $tt) isa ticket-types;'
-            '$tts has price $p;'
-        )        
+        # query += (
+        #     '$tts (has-museum: $m, has-ticket-type: $tt) isa ticket-types;'
+        #     '$tts has price $p;'
+        # )        
 
-        if (int(ticket_price[0]) > int(ticket_price[1])):
-            query += f'''
-                $p <= {ticket_price[0]};
-                $p >= {ticket_price[1]};
-            '''
-        else:
-            query += f'''
-                $p >= {ticket_price[0]};
-                $p <= {ticket_price[1]};
-            '''
+        # if (int(ticket_price[0]) > int(ticket_price[1])):
+        #     query += f'''
+        #         $p <= {ticket_price[0]};
+        #         $p >= {ticket_price[1]};
+        #     '''
+        # else:
+        #     query += f'''
+        #         $p >= {ticket_price[0]};
+        #         $p <= {ticket_price[1]};
+        #     '''
 
-        query += "get $name; limit 5;"
+        query += f'''
+            $tpr isa ticket-price-range, has ticket-price-range-name "{ticket_price.lower()}";
+            (has-museum: $m, has-ticket-price-range: $tpr) isa ticket-price-ranges;
+        '''
+
+        query += "get"
+
+        if (use_public_transport == "kendaraan umum" or use_public_transport == "tidak pakai kendaraan"):
+            query += " $name2, "
+
+        query += "$name; limit 5;"
 
         return self._execute_entity_query(query)
 
@@ -117,40 +130,7 @@ class GraphDatabase(KnowledgeBase):
         self,
         object_identifier: Text
     ) -> Optional[Dict[Text, Any]]:
-        if object_identifier == "Museum BNI 1946":
-            query = f'''
-            match $m isa museum;
-            $m has place-name $name;
-            $name "{object_identifier}";
-            $m has phone-number $phone-number;
-            $m has website $website;
-            $m has facebook $facebook;
-            $m has twitter $twitter;
-            $m has instagram $instagram;
-            $m has email $email;
-            $mc isa museum-category, has category-name $category;
-            (has-museum: $m, has-category: $mc) isa museum-categories;
-            $a isa address, has address-text $address;
-            $ad (has-museum: $m, has-address: $a) isa addresses;
-            $t isa transportation, has place-name $transportation;
-            (has-transportation: $t, has-museum: $m) isa transportations,
-            has distance $distance;
-            $co isa coordinate, has latitude $latitude, has longitude $longitude;
-            (has-museum: $m, has-coordinate: $co) isa coordinates;
-            $c isa city, has place-name $city;
-            (contains: $m, falls-within: $c) isa location;
-            $tt isa ticket-type, has ticket-name $ticket;
-            (has-museum: $m, has-ticket-type: $tt) isa ticket-types,
-            has price $price,
-            has category-name $ticket-category,
-            has alt-name $ticket-name;
-            get $name, $phone-number, $website, $facebook, $twitter,
-            $instagram, $email, $category, $latitude, $longitude, $city,
-            $address, $transportation, $distance, $ticket, $price, $ticket-category,
-            $ticket-name;
-        '''
-        else:
-            query = f'''
+        query = f'''
                 match $m isa museum;
                 $m has place-name $name;
                 $name "{object_identifier}";
@@ -160,6 +140,7 @@ class GraphDatabase(KnowledgeBase):
                 $m has twitter $twitter;
                 $m has instagram $instagram;
                 $m has email $email;
+                $m has description $description;
                 $mc isa museum-category, has category-name $category;
                 (has-museum: $m, has-category: $mc) isa museum-categories;
                 $a isa address, has address-text $address;
@@ -167,12 +148,6 @@ class GraphDatabase(KnowledgeBase):
                 $t isa transportation, has place-name $transportation;
                 (has-transportation: $t, has-museum: $m) isa transportations,
                 has distance $distance;
-                $sd isa schedule-day, has day $day;
-                (has-schedule-day: $sd, has-museum: $m) isa schedule-days,
-                has open $open,
-                has closed $closed,
-                has category-name $schedule-category,
-                has alt-name $schedule-name;
                 $co isa coordinate, has latitude $latitude, has longitude $longitude;
                 (has-museum: $m, has-coordinate: $co) isa coordinates;
                 $c isa city, has place-name $city;
@@ -182,12 +157,30 @@ class GraphDatabase(KnowledgeBase):
                 has price $price,
                 has category-name $ticket-category,
                 has alt-name $ticket-name;
+            '''
+
+        if object_identifier == "Museum BNI 1946":
+            query += '''
                 get $name, $phone-number, $website, $facebook, $twitter,
-                $instagram, $email, $category, $latitude, $longitude, $city,
+                $instagram, $email, $description, $category, $latitude, $longitude, $city,
+                $address, $transportation, $distance, $ticket, $price, $ticket-category,
+                $ticket-name;
+            '''
+        else:
+            query += '''
+                $sd isa schedule-day, has day $day;
+                (has-schedule-day: $sd, has-museum: $m) isa schedule-days,
+                has open $open,
+                has closed $closed,
+                has category-name $schedule-category,
+                has alt-name $schedule-name;
+                get $name, $phone-number, $website, $facebook, $twitter,
+                $instagram, $email, $description, $category, $latitude, $longitude, $city,
                 $address, $transportation, $distance, $day, $open, $closed,
                 $schedule-category, $schedule-name, $ticket, $price, $ticket-category,
                 $ticket-name;
             '''
+
         return self._execute_entity_query(query)
 
     
@@ -198,8 +191,8 @@ class GraphDatabase(KnowledgeBase):
         entities = self._get_museum_entities(attributes)
 
         if len(entities) > 0:
-            # recommender = Recommender.Recommender(attributes["use_public_transport"])
-            recommender = Recommender()
+            recommender = Recommender.Recommender(public_transport=attributes["use_public_transport"])
+            # recommender = Recommender(public_transport=attributes["use_public_transport"])
             return recommender.recommend(entities)
         else:
             return None
@@ -275,14 +268,15 @@ class GraphDatabase(KnowledgeBase):
 
                 if e["day"] not in entity["schedule"][e["schedule-category"]]["schedule-day"]:
                     entity["schedule"][e["schedule-category"]]["schedule-day"].append(e["day"])
-            
+
         return entity
 
 
 # graph = GraphDatabase()
 # attributes = {
-#     "schedule_day": ["senin", "selasa"],
-#     "ticket_price": ["0", "50000"],
+#     "schedule_day": ["senin", "selasa", "kamis", "jumat"],
+#     # "ticket_price": ["0", "25000"],
+#     "ticket_price": "paling mahal",
 #     "use_public_transport": "kendaraan umum"
 # }
 # get_graph = graph.get_entities(attributes=attributes)

@@ -81,12 +81,11 @@ class Recommender():
 
     def recommend(self, entities):
         if self.public_transport == "kendaraan pribadi":
-            self.museums.drop(columns=["public_transportation", "distance_to_museum"], axis=1, inplace=True)
             self.museums_bin.drop(columns=["public_transportation_bin"], axis=1, inplace=True)
 
         pred_museum = self.museums_bin.loc[self.museums_bin['name'] == entities[0]["name"]]
 
-        K = 10
+        K = 15
         neighbors = self.knn(pred_museum, entities[1:], K)
         i = len(entities) + 1
 
@@ -99,4 +98,4 @@ class Recommender():
             entities.append(museum)
             i += 1
 
-        return entities
+        return entities[:K]

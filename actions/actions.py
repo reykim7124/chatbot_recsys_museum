@@ -175,7 +175,9 @@ class ActionQueryMuseum(Action):
 
         graph_database = GraphDatabase()
         query = graph_database.get_entity(museum)
-        print(query)
+        
+        utter_description = "Deskripsi {0}\n\n{1}".format(query["name"], query["description"])
+
         utter_text = "Informasi {}:\n".format(query["name"])
         utter_text += "Kategori: {}\n\n".format(query["category"])
         utter_text += "\nKontak:\n"
@@ -274,6 +276,7 @@ class ActionQueryMuseum(Action):
 
             utter_text += "dari {}\n".format(value["transportation"])
 
+        dispatcher.utter_message(text=utter_description)
         dispatcher.utter_message(text=utter_text)
 
         return [SlotSet("museum", None)]
