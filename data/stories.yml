@@ -7,6 +7,12 @@ stories:
   - intent: greet
   - action: utter_greet
 
+- story: farewell
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+  - action: action_reset_all_slot
+
 - story: cancel recommendation
   steps:
   - intent: cancel_recommendation
@@ -41,12 +47,10 @@ stories:
     - requested_slot: ticket_price
   - slot_was_set:
     - ticket_price:
-      - '123'
-      - '90859'
+      - 'mahal'
   - slot_was_set:
     - ticket_price:
-      - '123'
-      - '90859'
+      - 'mahal'
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
@@ -83,12 +87,10 @@ stories:
     - requested_slot: ticket_price
   - slot_was_set:
     - ticket_price:
-      - '50000'
-      - '100000'
+      - 'murah'
   - slot_was_set:
     - ticket_price:
-      - '50000'
-      - '100000'
+      - 'murah'
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
@@ -110,3 +112,4 @@ stories:
   - intent: resolve_mention
   - action: action_resolve_mention
   - action: action_query_museum
+  - action: action_list_entities

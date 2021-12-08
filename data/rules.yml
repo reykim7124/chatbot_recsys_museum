@@ -12,6 +12,7 @@ rules:
   steps:
   - intent: goodbye
   - action: utter_goodbye
+  - action: action_reset_all_slot
 
 - rule: activate recommend form
   steps:
@@ -55,3 +56,4 @@ rules:
   - intent: resolve_mention
   - action: action_resolve_mention
   - action: action_query_museum
+  - action: action_list_entities

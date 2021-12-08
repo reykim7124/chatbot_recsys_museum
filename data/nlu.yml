@@ -80,6 +80,11 @@ nlu:
     - mau dong
     - ya
     - ya mau dong
+    - boleh
+    - ya boleh
+    - boleh dong
+    - tentu boleh
+    - boleh banget
 - intent: cancel_recommendation
   examples: |
     - tidak mau
@@ -138,28 +143,10 @@ nlu:
     - [senin]{"entity": "schedule_day", "value": "Senin"} [selasa]{"entity": "schedule_day", "value": "Selasa"}
 - intent: ticket_price
   examples: |
-    - dari [5000](ticket_price) sampai [10000](ticket_price)
-    - [30000](ticket_price) hingga [200000](ticket_price)
-    - [2500](ticket_price) - [72500](ticket_price)
-    - [19250](ticket_price) [32500](ticket_price)
-    - [2000](ticket_price) [6000](ticket_price)
-    - [4000](ticket_price) - [10000](ticket_price)
-    - [8000](ticket_price) dan [15000](ticket_price)
-    - [12000](ticket_price) dan [150000](ticket_price)
-    - [1000](ticket_price) [84373](ticket_price)
-    - [0](ticket_price) [23850](ticket_price)
-    - dari [0](ticket_price) sampai [25000](ticket_price)
-    - [0](ticket_price) hingga [7422](ticket_price)
-    - [100](ticket_price) [5000](ticket_price)
-    - [124](ticket_price) - [48570](ticket_price)
-    - [263](ticket_price) hingga [5000](ticket_price)
-    - [398475](ticket_price) sampai [7422](ticket_price)
-    - [9085](ticket_price) [422](ticket_price)
-    - [14](ticket_price) [422090](ticket_price)
-    - [3048](ticket_price) - [95](ticket_price)
-    - [865](ticket_price) [0](ticket_price)
-    - [123](ticket_price) [90859](ticket_price)
-    - [50000](ticket_price) [100000](ticket_price)
+    - [paling murah]{"entity": "ticket_price", "value": "paling murah"}
+    - [murah]{"entity": "ticket_price", "value": "murah"}
+    - [mahal]{"entity": "ticket_price", "value": "mahal"}
+    - [paling mahal]{"entity": "ticket_price", "value": "paling mahal"}
 - intent: list_more
   examples: |
     - yang lain
@@ -539,6 +526,44 @@ nlu:
     - palign bwh
     - pl ing bawh
     - pa lnig bwah
+- synonym: paling murah
+  examples: |
+    - sangat murah
+    - sangat termurah
+    - paling termurah
+    - paling ter murah
+    - sangat ter murah
+    - yang paling murah
+    - yang sangat murah
+    - yang paling termurah
+    - yang sangat termurah
+- synonym: murah
+  examples: |
+    - mura h
+    - m urah
+    - mu rah
+    - mur ah
+    - termurah
+    - ter murah
+- synonym: mahal
+  examples: |
+    - m ahal
+    - ma hal
+    - mah al
+    - maha l
+    - termahal
+    - ter mahal
+- synonym: paling mahal
+  examples: |
+    - sangat mahal
+    - sangat termahal
+    - paling termahal
+    - sangat ter mahal
+    - paling ter mahal
+    - yang paling mahal
+    - yang sangat mahal
+    - yang paling termahal
+    - yang sangat termahal
 - lookup: schedule_day
   examples: |
     - Senin
@@ -548,3 +573,32 @@ nlu:
     - Jumat
     - Sabtu
     - Minggu
+- lookup: ticket_price
+  examples: |
+    - paling murah
+    - murah
+    - mahal
+    - paling mahal
+
+# - dari [5000](ticket_price) sampai [10000](ticket_price)
+# - [30000](ticket_price) hingga [200000](ticket_price)
+# - [2500](ticket_price) - [72500](ticket_price)
+# - [19250](ticket_price) [32500](ticket_price)
+# - [2000](ticket_price) [6000](ticket_price)
+# - [4000](ticket_price) - [10000](ticket_price)
+# - [8000](ticket_price) dan [15000](ticket_price)
+# - [12000](ticket_price) dan [150000](ticket_price)
+# - [1000](ticket_price) [84373](ticket_price)
+# - [0](ticket_price) [23850](ticket_price)
+# - dari [0](ticket_price) sampai [25000](ticket_price)
+# - [0](ticket_price) hingga [7422](ticket_price)
+# - [100](ticket_price) [5000](ticket_price)
+# - [124](ticket_price) - [48570](ticket_price)
+# - [263](ticket_price) hingga [5000](ticket_price)
+# - [398475](ticket_price) sampai [7422](ticket_price)
+# - [9085](ticket_price) [422](ticket_price)
+# - [14](ticket_price) [422090](ticket_price)
+# - [3048](ticket_price) - [95](ticket_price)
+# - [865](ticket_price) [0](ticket_price)
+# - [123](ticket_price) [90859](ticket_price)
+# - [50000](ticket_price) [100000](ticket_price)

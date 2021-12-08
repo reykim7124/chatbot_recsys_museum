@@ -46,8 +46,11 @@ slots:
   schedule_day:
     type: list
     influence_conversation: false
+  # ticket_price:
+  #   type: list
+  #   influence_conversation: false
   ticket_price:
-    type: list
+    type: text
     influence_conversation: false
 responses:
   utter_greet:
@@ -67,11 +70,20 @@ responses:
   - text: |-
       Di hari apa saja kamu bisa mengunjungi museum? 
       Kamu bisa menyebutkan lebih dari 1
-      contoh: senin, kamis, jumat 
+      contoh: 
+      - senin, kamis, jumat
+      - rabu sabtu minggu
+  # utter_ask_ticket_price:
+  # - text: |-
+  #     Berapa harga tiket termurah dan termahal yang anda inginkan?
+  #     contoh: 1000 sampai 5000, 1000 dan 5000, 1000 - 5000, 1000 5000
   utter_ask_ticket_price:
   - text: |-
-      Berapa harga tiket termurah dan termahal yang anda inginkan?
-      contoh: 1000 sampai 5000, 1000 dan 5000, 1000 - 5000, 1000 5000
+      pilih salah satu kategori harga tiket yang kamu mau:
+      - paling murah
+      - murah
+      - mahal
+      - paling mahal
   utter_submit_recommend_form:
   - text: Terima kasih dan Mohon tunggu sebentar, Aku sedang memproses rekomendasi museum untuk kamu...
   utter_ask_rephrase:
