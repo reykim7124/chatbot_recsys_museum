@@ -7,17 +7,20 @@ stories:
   - intent: greet
   - action: utter_greet
 
+- story: farewell
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+  - action: action_reset_all_slot
+
 - story: cancel recommendation
   steps:
-  - intent: greet
-  - action: utter_greet
   - intent: cancel_recommendation
   - action: utter_cancel_recommendation
+  - action: action_reset_all_slot
 
-- story: interactive_story_1
+- story: happy path 1
   steps:
-  - intent: greet
-  - action: utter_greet
   - intent: user_agree_recommend
   - action: utter_user_agree_recommend
   - action: recommend_form
@@ -28,12 +31,6 @@ stories:
     - use_public_transport: kendaraan umum
   - slot_was_set:
     - use_public_transport: kendaraan umum
-  - slot_was_set:
-    - requested_slot: schedule_hour
-  - slot_was_set:
-    - schedule_hour: pagi
-  - slot_was_set:
-    - schedule_hour: pagi
   - slot_was_set:
     - requested_slot: schedule_day
   - slot_was_set:
@@ -50,14 +47,69 @@ stories:
     - requested_slot: ticket_price
   - slot_was_set:
     - ticket_price:
-      - '123'
-      - '90859'
+      - 'mahal'
   - slot_was_set:
     - ticket_price:
-      - '123'
-      - '90859'
+      - 'mahal'
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
   - action: utter_submit_recommend_form
-  - action: utter_slot_values_recommend_form
+  - action: action_submit_form
+  - slot_was_set:
+    - recommendations: [{"id": 1, "name": "Museum Bank Indonesia"}, {"id": 2, "name": "Art: 1 New Museum"}]
+  - action: action_query_entities
+  - action: action_list_entities
+
+- story: unhappy path 1
+  steps:
+  - intent: user_agree_recommend
+  - action: utter_user_agree_recommend
+  - action: recommend_form
+  - active_loop: recommend_form
+  - slot_was_set:
+    - requested_slot: use_public_transport
+  - slot_was_set:
+    - use_public_transport: kendaraan umum
+  - slot_was_set:
+    - use_public_transport: kendaraan umum
+  - slot_was_set:
+    - requested_slot: schedule_day
+  - slot_was_set:
+    - schedule_day:
+      - senin
+      - selasa
+  - slot_was_set:
+    - schedule_day:
+      - senin
+      - selasa
+  - slot_was_set:
+    - requested_slot: ticket_price
+  - slot_was_set:
+    - ticket_price:
+      - 'murah'
+  - slot_was_set:
+    - ticket_price:
+      - 'murah'
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_submit_recommend_form
+  - action: action_submit_form
+  - slot_was_set:
+    - recommendations: []
+  - action: utter_recommendation_empty
+  - action: action_reset_all_slot
+
+- story: if user ask for another list
+  steps:
+  - intent: list_more
+  - action: action_query_entities
+  - action: action_list_entities
+
+- story: if user ask for museum information
+  steps:
+  - intent: resolve_mention
+  - action: action_resolve_mention
+  - action: action_query_museum
+  - action: action_list_entities
