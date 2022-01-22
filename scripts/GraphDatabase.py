@@ -92,8 +92,17 @@ class GraphDatabase(KnowledgeBase):
         for idx, sd in enumerate(schedule_day):
             query += f'''
                 $sd{str(idx)} isa schedule-day, has day "{sd.capitalize()}";
-                (has-museum: $m, has-schedule-day: $sd{str(idx)}) isa schedule-days;
             '''
+
+        for idx, sd in enumerate(schedule_day):
+            query += f'''
+                {{(has-museum: $m, has-schedule-day: $sd{str(idx)}) isa schedule-days;}}
+            '''
+            
+            if idx < len(schedule_day) - 1:
+                query += "or"
+            else:
+                query += ";"
 
         # query += (
         #     '$tts (has-museum: $m, has-ticket-type: $tt) isa ticket-types;'
@@ -116,10 +125,10 @@ class GraphDatabase(KnowledgeBase):
             (has-museum: $m, has-ticket-price-range: $tpr) isa ticket-price-ranges;
         '''
 
-        query += "get"
+        query += "get "
 
-        if (use_public_transport == "kendaraan umum" or use_public_transport == "tidak pakai kendaraan"):
-            query += " $name2, "
+        # if (use_public_transport == "kendaraan umum" or use_public_transport == "tidak pakai kendaraan"):
+        #     query += "$name2, "
 
         query += "$name; limit 5;"
 

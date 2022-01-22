@@ -31,6 +31,8 @@ from rasa_sdk.events import SlotSet, AllSlotsReset
 from typing import Text, Dict, Any
 from rasa_sdk.executor import CollectingDispatcher
 from scripts.GraphDatabase import GraphDatabase
+import os
+import pandas as pd
 
 
 class ActionResetAllSlot(Action):
@@ -66,8 +68,12 @@ class ActionSubmitForm(Action):
         
         if entities is None:
             return [SlotSet("recommendations", None)]
-
-        slots = [SlotSet("recommendations", entities)]
+        
+        dir_path = os.getcwd()
+        df = pd.read_csv(dir_path + '/datasets/query_result.csv')
+        df = df.append(pd.DataFrame({"query_result": entities}), ignore_index=True)
+        df.to_csv(dir_path + '/datasets/query_result.csv', index=False)
+        slots = [SlotSet("recommendations", entities), SlotSet("listed_items", None)]
         
         for key in attributes:
             slots.append(SlotSet(key, None))
@@ -88,7 +94,7 @@ class ActionQueryEntities(Action):
 
         if entities is None:
             return []
-
+        
         listed_items = tracker.get_slot("listed_items")
         slots = []
 
@@ -114,13 +120,12 @@ class ActionListEntities(Action):
         if entities is None:
             return []
 
-        dispatcher.utter_message(
-            "Berikut daftar rekomendasi museum:"
-        )
+        msg = "Berikut daftar rekomendasi museum:\n"
         
         for i, e in enumerate(entities):
-            dispatcher.utter_message(f"{i + 1}: {e['name']}")
+            msg += "{}: {}\n".format(i + 1, e['name'])
 
+        dispatcher.utter_message(text=msg)
         return []
 
 
@@ -176,11 +181,11 @@ class ActionQueryMuseum(Action):
         graph_database = GraphDatabase()
         query = graph_database.get_entity(museum)
         
-        utter_description = "Deskripsi {0}\n\n{1}".format(query["name"], query["description"])
+        utter_description = "Deskripsi {0}:  \n{1}".format(query["name"], query["description"])
 
         utter_text = "Informasi {}:\n".format(query["name"])
-        utter_text += "Kategori: {}\n\n".format(query["category"])
-        utter_text += "\nKontak:\n"
+        utter_text += "Kategori: {}\n".format(query["category"])
+        utter_text += "Kontak:\n"
 
         phone_number = query["phone-number"].split(", ")
         if len(phone_number) > 1:
@@ -276,7 +281,7 @@ class ActionQueryMuseum(Action):
 
             utter_text += "dari {}\n".format(value["transportation"])
 
-        dispatcher.utter_message(text=utter_description)
-        dispatcher.utter_message(text=utter_text)
+        dispatcher.utter_message(text=utter_description + " \n " + utter_text)
+        # dispatcher.utter_message(text=utter_text)
 
         return [SlotSet("museum", None)]

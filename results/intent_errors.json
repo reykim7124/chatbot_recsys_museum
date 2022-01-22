@@ -1,0 +1,122 @@
+[
+  {
+    "text": "sampai jumpa",
+    "intent": "goodbye",
+    "intent_prediction": {
+      "name": "schedule_day",
+      "confidence": 0.8486749529838562
+    }
+  },
+  {
+    "text": "sampaijumpa",
+    "intent": "goodbye",
+    "intent_prediction": {
+      "name": "resolve_mention",
+      "confidence": 0.9915986061096191
+    }
+  },
+  {
+    "text": "Murah banget",
+    "intent": "user_agree_recommend",
+    "intent_prediction": {
+      "name": "ticket_price",
+      "confidence": 0.5878565907478333
+    }
+  },
+  {
+    "text": "tiga",
+    "intent": "resolve_mention",
+    "intent_prediction": {
+      "name": "cancel_recommendation",
+      "confidence": 0.6878980994224548
+    }
+  },
+  {
+    "text": "paling bawah",
+    "intent": "resolve_mention",
+    "intent_prediction": {
+      "name": "ticket_price",
+      "confidence": 0.9684489369392395
+    }
+  },
+  {
+    "text": "prmsi",
+    "intent": "greet",
+    "intent_prediction": {
+      "name": "use_public_transport",
+      "confidence": 0.5026651620864868
+    }
+  },
+  {
+    "text": "ulangi lagi",
+    "intent": "user_agree_recommend",
+    "intent_prediction": {
+      "name": "list_more",
+      "confidence": 0.9998875856399536
+    }
+  },
+  {
+    "text": "pertama",
+    "intent": "resolve_mention",
+    "intent_prediction": {
+      "name": "goodbye",
+      "confidence": 0.5742596983909607
+    }
+  },
+  {
+    "text": "bye",
+    "intent": "goodbye",
+    "intent_prediction": {
+      "name": "user_agree_recommend",
+      "confidence": 0.9990682005882263
+    }
+  },
+  {
+    "text": "rekomen",
+    "intent": "user_agree_recommend",
+    "intent_prediction": {
+      "name": "list_more",
+      "confidence": 0.6395291686058044
+    }
+  },
+  {
+    "text": "satu",
+    "intent": "resolve_mention",
+    "intent_prediction": {
+      "name": "schedule_day",
+      "confidence": 0.940578043460846
+    }
+  },
+  {
+    "text": "yes",
+    "intent": "user_agree_recommend",
+    "intent_prediction": {
+      "name": "goodbye",
+      "confidence": 0.3662548363208771
+    }
+  },
+  {
+    "text": "aku gk mau",
+    "intent": "cancel_recommendation",
+    "intent_prediction": {
+      "name": "user_agree_recommend",
+      "confidence": 0.9576173424720764
+    }
+  },
+  {
+    "text": "lima",
+    "intent": "resolve_mention",
+    "intent_prediction": {
+      "name": "goodbye",
+      "confidence": 0.7148285508155823
+    }
+  },
+  {
+    "text": "kelima",
+    "intent": "resolve_mention",
+    "intent_prediction": {
+      "name": "goodbye",
+      "confidence": 0.8802227973937988
+    }
+  }
+]

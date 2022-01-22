@@ -46,6 +46,7 @@ class Recommender():
         """
         a = self.museums_bin.iloc[museum_id_1]
         b = self.museums_bin.iloc[museum_id_2]
+        distance = 0
         for val in self.similarities[museum_id_1]:
             if val["id"] == museum_id_2:
                 distance = 1 - val["sim"]

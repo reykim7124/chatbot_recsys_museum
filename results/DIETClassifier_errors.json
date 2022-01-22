@@ -1,0 +1,225 @@
+[
+  {
+    "text": "sampai jumpa",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "schedule_day",
+        "start": 0,
+        "end": 6,
+        "confidence_entity": 0.5901955366134644,
+        "value": "sampai",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "schedule_day",
+        "start": 7,
+        "end": 12,
+        "confidence_entity": 0.9861074686050415,
+        "value": "jumpa",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "sampaijumpa",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "mention",
+        "start": 0,
+        "end": 11,
+        "confidence_entity": 0.6595093607902527,
+        "value": "sampaijumpa",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "tidak jadi",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "use_public_transport",
+        "start": 0,
+        "end": 5,
+        "confidence_entity": 0.5618016123771667,
+        "value": "tidak",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "tidak memakai kendaraan pribadi",
+    "entities": [
+      {
+        "start": 0,
+        "end": 31,
+        "value": "tidak memakai kendaraan pribadi",
+        "entity": "use_public_transport"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "use_public_transport",
+        "start": 0,
+        "end": 5,
+        "confidence_entity": 0.9742676615715027,
+        "value": "tidak",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "use_public_transport",
+        "start": 14,
+        "end": 31,
+        "confidence_entity": 0.9534921050071716,
+        "value": "kendaraan pribadi",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "tiga",
+    "entities": [
+      {
+        "start": 0,
+        "end": 4,
+        "value": "3",
+        "entity": "mention"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "ketiga",
+    "entities": [
+      {
+        "start": 0,
+        "end": 6,
+        "value": "3",
+        "entity": "mention"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "paling bawah",
+    "entities": [
+      {
+        "start": 0,
+        "end": 12,
+        "value": "terakhir",
+        "entity": "mention"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "ticket_price",
+        "start": 0,
+        "end": 6,
+        "confidence_entity": 0.9990324974060059,
+        "value": "paling",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "mention",
+        "start": 7,
+        "end": 12,
+        "confidence_entity": 0.715972900390625,
+        "value": "terakhir",
+        "extractor": "DIETClassifier",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "prodbadi",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "use_public_transport",
+        "start": 0,
+        "end": 8,
+        "confidence_entity": 0.9883059859275818,
+        "value": "prodbadi",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "pertama",
+    "entities": [
+      {
+        "start": 0,
+        "end": 7,
+        "value": "1",
+        "entity": "mention"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "satu",
+    "entities": [
+      {
+        "start": 0,
+        "end": 4,
+        "value": "1",
+        "entity": "mention"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "schedule_day",
+        "start": 0,
+        "end": 4,
+        "confidence_entity": 0.954675018787384,
+        "value": "1",
+        "extractor": "DIETClassifier",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "selamat tinggal",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "schedule_day",
+        "start": 0,
+        "end": 7,
+        "confidence_entity": 0.8046640157699585,
+        "value": "selamat",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "lima",
+    "entities": [
+      {
+        "start": 0,
+        "end": 4,
+        "value": "5",
+        "entity": "mention"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "kelima",
+    "entities": [
+      {
+        "start": 0,
+        "end": 6,
+        "value": "5",
+        "entity": "mention"
+      }
+    ],
+    "predicted_entities": []
+  }
+]
